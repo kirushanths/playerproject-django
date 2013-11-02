@@ -1,5 +1,9 @@
-
 ##### Download playerproject vagrant .box file
+
+##### Edit Host File
+```
+sudo echo -e '10.30.0.2 develop.theplayerproject.com' >> /etc/hosts
+```
 
 ##### Vagrant setup commands on host machine
 
@@ -26,3 +30,5 @@ $$ tpp
 (alias shortcut, takes you right to the mounted folder and actiavtes virtual env 
 ```
 
+##### Development Server
+- When server is running you can access the dev site through your host machine browser using `develop.theplayerproject.com`
