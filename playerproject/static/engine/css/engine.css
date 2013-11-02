@@ -1,0 +1,100 @@
+#dz-imageToolbar
+{
+	z-index: 9998;
+	margin: 100px 0 0 0;
+	height: 50px;
+	width: 170px;
+	border-radius: 3px;
+	border-style:solid;
+	border-width:1px;
+	border-color: gray; 
+	background-color: rgba(240, 240, 240, 0.9);
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+}
+
+#dz-copyToolbar, #dz-removeToolbar
+{
+	z-index: 9999; 
+	height: 20px;
+	width: 80px;
+	border-radius: 3px;
+	border-style:solid;
+	border-width:1px;
+	border-color: gray; 
+	background-color: rgba(240, 240, 240, 0.9);
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	float: left;
+	text-align:center;
+	margin: 5px 0 0 12px;
+	font-size: 13px;
+	font-weight:bold;
+	cursor: pointer;
+}
+
+#dz-imageToolbar .dz-title
+{
+	float: left;
+	margin: 5px 0 0 7px;
+	font-size: 13px;
+	font-weight:bold;
+	pointer-events:none;
+}
+
+#dz-imageToolbar .dz-text
+{
+	float: left;
+	margin: 0px 0 0 7px;
+	font-size:11px;
+	pointer-events:none;
+}
+
+#dz-imageToolbar .dz-preview
+{
+	float: right;
+	margin: 2.5px 5px 0 0; 
+	height:40px;
+	width: 40px;
+	pointer-events:none;
+}
+
+#dz-imageToolbar img
+{ 
+	vertical-align: middle;
+	max-height: 40px;
+	max-width: 40px;
+}
+
+#dz-linkToolbar
+{
+	z-index: 9998;
+	margin: 100px 0 0 0;
+	height: 50px;
+	width: 170px;
+	border-radius: 3px;
+	border-style:solid;
+	border-width:1px;
+	border-color: gray; 
+	background-color: rgba(240, 240, 240, 0.9);
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+}
+
+#dz-linkToolbar .dz-title
+{ 
+	float:left;
+	margin: 5px 0 0 7px;
+	font-size: 13px;
+	font-weight:bold;
+	pointer-events:none;
+}
+
+#dz-linkToolbar .dz-input
+{
+	float: left;
+	margin: 0px 0 0 5px;
+	font-size:11px; 
+}
+
+#dz-link-text
+{
+	width: 158px;
+}

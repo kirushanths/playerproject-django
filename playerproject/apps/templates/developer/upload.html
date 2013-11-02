@@ -1,0 +1,28 @@
+{% extends "base/_layout_standard.html" %}
+{% load staticfiles i18n %}
+{% load bootstrap %}
+
+{% block header_title %}
+	Upload your template
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+	<div class="col-xs-12 col-md-8 col-sm-10">
+
+		<div class="">
+			<form
+				class="form-horizontal"
+				action="{% url 'developer_upload' %}" 
+				method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+
+				{{ form|bootstrap_horizontal }}
+			</form>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}

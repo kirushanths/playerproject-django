@@ -1,0 +1,20 @@
+{% extends "base/_layout_standard.html" %}
+{% load staticfiles i18n %}
+{% load bootstrap %}
+
+{% block header_title %}
+	Create your account
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+	<div class="col-xs-12 col-md-8 col-sm-10">
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
+			{{ user_form|bootstrap_horizontal }}
+		</form>
+	</div>
+</div>
+
+{% endblock %}

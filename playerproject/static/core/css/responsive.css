@@ -1,0 +1,54 @@
+
+.navbar-fixed-top, .navbar { margin-bottom:0; }
+
+ /*  LANDING */
+
+    /* Large desktop */
+    @media (min-width: 1200px) { 
+        /* LANDING */
+            .landing_header .h1 { font-size:40px; }
+    }
+ 
+    /* Portrait tablet to landscape and desktop */
+    @media (min-width: 768px) and (max-width: 979px) { 
+
+        /*.root_container { padding-top:20px; }*/
+
+        /* LANDING */
+            .landing_header .logo { margin:50px auto; }
+            .landing_header .logo img { width:311px; height:80px;  }
+            .landing_header .h1 { font-size:25px; }
+            .landing_header .h2 { margin:0 0 35px 0; font-size: 23px; }
+            .landing_header .slogan { 
+                padding:40px 40px 60px;
+                width:auto; } 
+    }
+ 
+    /* Landscape phone to portrait tablet */
+    @media (max-width: 767px) {
+        /*.root_container { padding-top:20px; }*/
+
+        /* LANDING */
+            .landing_header {
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+
+            .landing_header .logo { margin:30px auto; }
+            .landing_header .logo img { width:auto; height:60px; }
+            .landing_header .slogan { 
+                margin:10px auto; 
+                padding:20px 40px; 
+            } 
+            .landing_header .form-group { margin-right:0px; }
+
+            .landing_header .h1 { font-size:20px; }
+            .landing_header .h2 { margin:0 0 25px 0; font-size: 14px; }
+    }
+ 
+    /* Landscape phones and down */
+    @media (max-width: 480px) { 
+
+
+    }
+

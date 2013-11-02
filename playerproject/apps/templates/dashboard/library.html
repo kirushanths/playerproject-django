@@ -1,0 +1,39 @@
+{% extends "base/_layout_standard.html" %}
+{% load staticfiles i18n %}
+
+{% block header_title %}
+	Select your template
+{% endblock %}
+
+{% block header_right %}
+	<form class="form-inline pull-right" role="form" method="post">
+		{% csrf_token %}
+		<div class="input-group">
+			<input type="email" class="form-control" id="libray_search" placeholder="Search" name="search" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</span>
+		</div>
+	</form>
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+	<div class="col-md-3">
+		{% include "dashboard/_library_sidebar.html" %}
+	</div>
+	<div class="col-md-3">
+		{% include "dashboard/_template_card.html" %}
+	</div>
+	<div class="col-md-3">
+		{% include "dashboard/_template_card.html" %}
+	</div>
+	<div class="col-md-3">
+		{% include "dashboard/_template_card.html" %}
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "accounts/register.html" %}
+
+{% block header_title %}
+	Create your developer account&nbsp;
+	<small>
+			<code class="text-muted">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				dev
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</code>
+	</small>
+{% endblock %}
+
+{% block header_right %}
+<h5>
+	<a href="{% url 'account_register' %}">
+		Not a developer? Create a normal account
+	</a>
+</h5>
+{% endblock %}
+
+{% block main %}
+
+<h5 class="text-muted">
+	With a developer account, you can upload your own templates and make them available in our library. 
+</h5>
+<br/>
+
+{{ block.super }}
+
+{% endblock %}

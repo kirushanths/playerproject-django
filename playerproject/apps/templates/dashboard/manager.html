@@ -1,0 +1,60 @@
+{% extends "base/_layout_standard.html" %}
+{% load staticfiles i18n %}
+
+{% block header_title %}
+	Dashboard Manager
+{% endblock %}
+
+{% block main %}
+
+<div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">
+		<h5 class="pull-left">
+			Current Sites&nbsp;
+			<span class="label label-default">1</span>
+		</h5>
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-default">Refresh</button>
+			<a href="{% url 'dashboard_library' %}" class="btn btn-primary">Add Site</a>
+		</div>
+		<div class="clearfix">&nbsp;</div>
+	</div>
+
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Site ID</th>
+					<th>Description</th>
+					<th>Status</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1337</td>
+					<td>Fish &amp; Taco Store</td>
+					<td><span class="label label-success">Active</span></td>
+					<td>
+						<a href="{% url 'dashboard_site_overview' 1 %}" class="">Edit</a>
+					</td>
+				</tr>
+				{% for i in c %}
+				<tr class="active">
+					<td>1337</td>
+					<td>Fish &amp; Taco Store</td>
+					<td><span class="label label-success">Active</span></td>
+					<td>
+						<div class="btn-group btn-group-xs">
+							<div class="btn btn-default">Edit</div>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %}
