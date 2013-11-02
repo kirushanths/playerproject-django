@@ -1,0 +1,2 @@
+cd /var/www/local/public/sql/
+mysql -u root -prootroot -e "CREATE DATABASE IF NOT EXISTS auth_users_demo; USE auth_users_demo; SOURCE playerproject.user.sql; SOURCE playerproject.priv.sql; SOURCE playerproject.custom.sql; SOURCE playerproject.msg.sql;"

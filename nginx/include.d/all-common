@@ -1,0 +1,25 @@
+## MUSTT go inside server { ... }
+## KIRU
+
+#try_files $uri $uri/ =404;
+
+location / {
+    try_files $uri $uri/ /index.php;
+}
+
+## KIRU - Images and static content is treated different
+location ~*  \.(jpg|jpeg|gif|css|png|js|ico|xml)$ {
+        access_log        off;
+        expires           1d;
+}
+
+location = /robots.txt
+    { access_log off; log_not_found off; }
+location = /favicon.ico
+    { access_log off; log_not_found off; }
+
+## Disable access to hidden files
+location ~ /\.
+    { access_log off; log_not_found off; deny all; }
+location ~ ~$
+    { access_log off; log_not_found off; deny all; }     

@@ -1,0 +1,49 @@
+erver {
+
+        listen          80;
+        server_name     staging.theplayerproject.com www.staging.theplayerproject.com;
+        rewrite        ^ https://$server_name$request_uri? permanent;
+}
+
+server {
+        listen 443 ssl;
+        server_name     staging.theplayerproject.com;
+
+        root            /var/www/staging/public/root/;
+
+        ## SSL cert files
+        ssl_certificate  /etc/nginx/ssl/staging.theplayerproject.com/staging.theplayerproject.com.chained.crt;
+        #/etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/staging.theplayerproject.com/staging.theplayerproject.key;
+        #/etc/nginx/ssl/server.key;
+
+        ## SSL logs
+        access_log      /var/log/nginx/ssl.staging.access.log;
+        error_log       /var/log/nginx/ssl.STAG.error.log;
+
+        ## KIRU - Parse all .php file in the /var/www directory
+        location ~ .php$ {
+                fastcgi_split_path_info ^(.+\.php)(.*)$;
+                fastcgi_pass   127.0.0.1:9000;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  /var/www$fastcgi_script_name;
+                include fastcgi_params;
+                fastcgi_param  QUERY_STRING     $query_string;
+                fastcgi_param  REQUEST_METHOD   $request_method;
+                fastcgi_param  CONTENT_TYPE     $content_type;
+                fastcgi_param  CONTENT_LENGTH   $content_length;
+                fastcgi_param  ENV_LOCATION     STAGING;
+                fastcgi_intercept_errors        on;
+                fastcgi_ignore_client_abort     off;
+                fastcgi_connect_timeout 60;
+                fastcgi_send_timeout 180;
+                fastcgi_read_timeout 180;
+                fastcgi_buffer_size 128k;
+                fastcgi_buffers 4 256k;
+                fastcgi_busy_buffers_size 256k;
+                fastcgi_temp_file_write_size 256k;
+        }
+
+        include /etc/nginx/include.d/all-common;
+        include /etc/nginx/include.d/ci-common;
+}
