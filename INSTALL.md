@@ -1,4 +1,5 @@
 ##### Download playerproject vagrant .box file
+https://www.dropbox.com/s/6d3g7s7v5e9s64u/package.box
 
 ##### Edit Host File
 ```
