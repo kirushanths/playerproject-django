@@ -1,0 +1,27 @@
+{% extends "base/__base.html" %}
+{% load staticfiles i18n %}
+
+{% block content %}
+
+	{% block before_main %}
+	{% endblock %}
+
+	<div class="container">
+		<div class="page-header">
+			{% block page_header %}
+				<div class="row">
+					<div class="col-sm-8">
+						<h4 class="text-info">{% block header_title %}Title{% endblock %}</h4>
+					</div>
+					<div class="col-sm-4">
+						{% block header_right %}{% endblock %}
+					</div>
+				</div>
+			{% endblock %}
+		</div>
+
+		{% block main %}
+		{% endblock %}
+	</div>
+
+{% endblock %}
