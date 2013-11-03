@@ -27,7 +27,7 @@ Bringing machine 'default' up with 'virtualbox' provider
 ##### In Vagrant:
 
 ```
-$$ tpp
+tpp
 (alias shortcut, takes you right to the mounted folder and actiavtes virtual env 
 ```
 
