@@ -1,4 +1,3 @@
-dazzle_django
-=============
+##### playerproject
 
-dazzle_django
+- django-1.6rc
