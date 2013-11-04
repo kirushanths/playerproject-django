@@ -1,11 +1,16 @@
 server {
-        listen          80;
+        listen          443 ssl;
         server_name     _;
         access_log      /var/log/nginx/localhost_access.log;
         error_log       /var/log/nginx/localhost_error.log;
 
-        sendfile off;
+        sendfile on;
         expires off;
+
+        include /etc/nginx/include.d/all-ssl;
+
+        ssl_certificate /vagrant/src/playerproject/ssl/local/cert.pem;
+        ssl_certificate_key /vagrant/src/playerproject/ssl/local/key.pem;
 
         # https://docs.djangoproject.com/en/dev/howto/static-files/#serving-static-files-in-production
         location /static/ { # STATIC_URL
