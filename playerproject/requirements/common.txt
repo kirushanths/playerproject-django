@@ -17,4 +17,5 @@ requests==1.2.3
 simplejson==2.3.2
 virtualenv==1.9.1
 python-memcached
-uwsgi
+uwsgi==1.9
+south==0.8.2

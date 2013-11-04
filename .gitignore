@@ -43,7 +43,7 @@ Gemfile.lock
 *.sublime-project
 *.sublime-workspace
 *.scssc
-dazzle/dazzle/settings/local.py
+playerproject/playerproject/settings/local.py
 *.pyc
 *~
 *.scssc

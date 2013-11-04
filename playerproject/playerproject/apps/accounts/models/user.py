@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save, pre_save
 from django.core.urlresolvers import reverse
 
-from dazzle.libs.model.models import BaseModel, BaseModelManager
+from playerproject.libs.model.models import BaseModel, BaseModelManager
 
 class DZUserManager(BaseUserManager, BaseModelManager):
     def create_user(self, email, password, **extra_fields):

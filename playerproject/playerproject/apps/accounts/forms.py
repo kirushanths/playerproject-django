@@ -8,7 +8,7 @@ from django.contrib.auth.forms import (
 
 from .models import DZUser
 
-from dazzle.libs.fields import SubmitButtonField
+from playerproject.libs.fields import SubmitButtonField
 
 class DZUserLoginForm(AuthenticationForm):
     submit = SubmitButtonField(label="", initial=u"Sign In")

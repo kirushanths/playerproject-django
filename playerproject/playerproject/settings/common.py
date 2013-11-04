@@ -1,7 +1,8 @@
 import os
+import sys
 from django.core.urlresolvers import reverse_lazy
 
-# Django settings for dazzle project.
+# Django settings for playerproject project.
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -9,9 +10,9 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = ()
 MANAGERS = ADMINS
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_PATH, os.pardir)).replace('\\','/')
+sys.path.append(PROJECT_ROOT)
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -68,7 +69,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'dazzle.apps.accounts.middleware.UpdateLastActivityMiddleware',
+    'playerproject.apps.accounts.middleware.UpdateLastActivityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
@@ -90,16 +91,11 @@ INSTALLED_APPS = (
     # 'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dazzle.apps',
-    'dazzle.apps.api',
-    'dazzle.apps.billing',
-    'dazzle.apps.corporate',
-    'dazzle.apps.accounts',
-    'dazzle.apps.dashboard',
-    'dazzle.apps.engine',
-    'dazzle.apps.dztemplate',
-    'dazzle.libs.model',
-    'dazzle.libs.utils',
+    'playerproject.apps',
+    'playerproject.apps.corporate',
+    'playerproject.apps.accounts',
+    'playerproject.libs.model',
+    'playerproject.libs.utils',
     'south',
     # 'storages',
     # Uncomment the next line to enable the admin:
@@ -145,13 +141,4 @@ LOGIN_REDIRECT_URL = reverse_lazy('dashboard_home')
 LOGIN_URL = reverse_lazy('account_login')
 LOGOUT_URL = reverse_lazy('account_logout')
 
-# S3 AMAZON
-
-S3_ACCESS_KEY = 'AKIAIT5VHRH3SYEXEX5Q'
-S3_SECRET_KEY = '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'
-S3_URL = 'http://s3.amazonaws.com/'
-S3_BUCKET = 'dazzledev'
-S3_TEMPLATE_FOLDER = '/templates/'
-S3_TEMPLATE_FOLDER_NAME = 'templates'
-S3_TEMPLATE_URL = S3_URL + S3_BUCKET + S3_TEMPLATE_FOLDER
 

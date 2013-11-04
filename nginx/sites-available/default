@@ -1,0 +1,25 @@
+server {
+        listen          80;
+        server_name     _;
+        access_log      /var/log/nginx/localhost_access.log;
+        error_log       /var/log/nginx/localhost_error.log;
+
+        sendfile off;
+        expires off;
+
+        # https://docs.djangoproject.com/en/dev/howto/static-files/#serving-static-files-in-production
+        location /static/ { # STATIC_URL
+                alias /vagrant/src/playerproject/playerproject/static/; # STATIC_ROOT
+                expires 0;
+        }
+
+        location /media/ { # MEDIA_URL
+                alias /vagrant/src/playerproject/playerproject/media/; # MEDIA_ROOT
+                expires 0;
+        }
+
+        location / {
+                uwsgi_pass  unix:///tmp/playerproject.sock;
+                include     uwsgi_params;
+        }
+}
