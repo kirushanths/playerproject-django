@@ -17,13 +17,13 @@ from django.core.urlresolvers import reverse
 
 from playerproject.libs.model.models import BaseModel, BaseModelManager
 
-class DZUserManager(BaseUserManager, BaseModelManager):
+class PPUserManager(BaseUserManager, BaseModelManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=DZUserManager.normalize_email(email),
+            email=PPUserManager.normalize_email(email),
             is_staff=False, is_active=True, is_superuser=False,
             **extra_fields
         )
@@ -44,7 +44,7 @@ class DZUserManager(BaseUserManager, BaseModelManager):
         return user
 
 
-class DZUser(AbstractBaseUser, PermissionsMixin, BaseModel):
+class PPUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     ROLE_USER = 'user'
     ROLE_DEVELOPER = 'developer'
     ROLE_CHOICES = (
@@ -68,7 +68,7 @@ class DZUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     last_activity = models.DateTimeField(auto_now=False, null=True, blank=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    user = DZUserManager()
+    user = PPUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -41,7 +41,7 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-AUTH_USER_MODEL = 'accounts.DZUser'
+AUTH_USER_MODEL = 'accounts.PPUser'
 
 # List of finder classes that know how to find static files in
 # various locations.

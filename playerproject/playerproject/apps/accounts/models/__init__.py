@@ -1,1 +1,1 @@
-from playerproject.apps.accounts.models.user import DZUser
+from playerproject.apps.accounts.models.user import PPUser

@@ -1,16 +1,16 @@
 from django.contrib import admin
-from .models import DZUser
+from .models import PPUser
 
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .forms import DZUserModelForm, DZUserChangeForm
+from .forms import PPUserModelForm, PPUserChangeForm
 
-class DZUserAdmin(UserAdmin):
-    add_form = DZUserModelForm
-    form = DZUserChangeForm
+class PPUserAdmin(UserAdmin):
+    add_form = PPUserModelForm
+    form = PPUserChangeForm
     
     list_display = ('email', 'is_staff',)
     list_filter = ('is_staff', 'is_superuser',
@@ -38,4 +38,4 @@ class DZUserAdmin(UserAdmin):
         ),
     )
  
-admin.site.register(DZUser)
+admin.site.register(PPUser)
