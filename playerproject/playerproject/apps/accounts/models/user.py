@@ -45,15 +45,17 @@ class PPUserManager(BaseUserManager, BaseModelManager):
 
 
 class PPUser(AbstractBaseUser, PermissionsMixin, BaseModel):
-    ROLE_USER = 'user'
-    ROLE_DEVELOPER = 'developer'
+    ROLE_STANDARD = 'standard'
+    ROLE_PLAYER = 'player'
+    ROLE_RECRUITER = 'recruiter'
     ROLE_CHOICES = (
-        (ROLE_USER, 'Normal'),
-        (ROLE_DEVELOPER, 'Developer'))
+        (ROLE_USER, 'Standard'),
+        (ROLE_PLAYER, 'Player'),
+        (ROLE_RECRUITER, 'Recruiter'))
 
     email = models.EmailField(max_length=254, unique=True, db_index=True)
 
-    role = models.CharField(max_length=60, choices=ROLE_CHOICES, default=ROLE_USER, null=True, blank=True)
+    role = models.CharField(max_length=60, choices=ROLE_CHOICES, default=ROLE_STANDARD, null=True, blank=True)
 
     first_name = models.CharField(_('first name'), max_length=50, null=True, blank=True)
     last_name = models.CharField(_('last name'), max_length=50, null=True, blank=True)
@@ -76,8 +78,11 @@ class PPUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     class Meta:
         app_label = 'accounts'
 
-    def is_developer(self):
-        return self.role == self.ROLE_DEVELOPER
+    def is_player(self):
+        return self.role == self.ROLE_PLAYER
+
+    def is_recruiter(self):
+        return self.role == self.ROLE_RECRUITER
 
     def get_full_name(self):
         fname = lname = None
@@ -115,4 +120,5 @@ class PPUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     def has_module_perms(self, app_label):
         # Handle whether the user has permissions to view the app `app_label`?"
         return True
+
 
