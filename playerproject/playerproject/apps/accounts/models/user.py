@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save, pre_save
 from django.core.urlresolvers import reverse
 
-from playerproject.apps.accounts.models import PPUserContactInfo
+from playerproject.apps.accounts.models.contact import PPUserContactInfo
 from playerproject.libs.model.models import BaseModel, BaseModelManager
 
 class PPUserManager(BaseUserManager, BaseModelManager):
@@ -50,7 +50,7 @@ class PPUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     ROLE_PLAYER = 'player'
     ROLE_RECRUITER = 'recruiter'
     ROLE_CHOICES = (
-        (ROLE_USER, 'Standard'),
+        (ROLE_STANDARD, 'Standard'),
         (ROLE_PLAYER, 'Player'),
         (ROLE_RECRUITER, 'Recruiter'))
 

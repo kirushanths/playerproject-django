@@ -7,7 +7,7 @@
 		<span class="icon-bar"></span>
 	</button>
 
-	<a class="navbar-brand" href="{% url 'corporate_home' %}">Dazzle</a>
+	<a class="navbar-brand" href="{% url 'corporate_home' %}">theplayerproject</a>
 
 	<div class="navbar-collapse collapse">
 
@@ -22,7 +22,7 @@
 					</code></a>
 				</li>
 			{% endif %}
-			{% if user.is_developer %}
+			{% if user.is_recruiter %}
 				<li>
 					<a><code class="inverse">
 						<span class="glyphicon glyphicon-chevron-left"></span>
@@ -40,8 +40,8 @@
 			<li><a href="{% url 'account_logout' %}">Logout</a></li>
 			{% else %}
 			<li class="active">
-				<a href="{% url 'account_register_developer' %}">
-					Are you a developer?
+				<a href="{% url 'account_register_recruit' %}">
+					Are you a Recruiter?
 				</a>
 			</li>
 			<li>

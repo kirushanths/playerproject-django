@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'playerproject.apps',
     'playerproject.apps.corporate',
     'playerproject.apps.accounts',
+    'playerproject.apps.dashboard',
     'playerproject.libs.model',
     'playerproject.libs.utils',
     'south',

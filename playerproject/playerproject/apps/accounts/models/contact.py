@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from playerproject.libs.model.models import BaseModel
 
-class PPUserContactInfo (BaseModel):
+class PPUserContactInfo(BaseModel):
 
     phone_number = models.CharField(_('phone number'), max_length=50, null=True, blank=True)
     
