@@ -272,7 +272,7 @@ class BaseModel(models.Model):
         null=True,
         blank=True
     )
-    attributes = BaseGenericRelation(ModelAttribute)
+    attributes = generic.GenericRelation(ModelAttribute)
 
     objects = BaseModelManager()
 
