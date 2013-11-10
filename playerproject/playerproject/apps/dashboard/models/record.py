@@ -12,8 +12,6 @@ class PPUserRecord (BaseModel):
     first_name = models.CharField(_('first name'), max_length=50, null=True, blank=True)
     last_name = models.CharField(_('last name'), max_length=50, null=True, blank=True)
 
-
-
     contact_info = models.ForeignKey(
         PPUserContactInfo,
         related_name='+',

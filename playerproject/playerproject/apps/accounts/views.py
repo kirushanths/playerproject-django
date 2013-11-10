@@ -24,10 +24,7 @@ def login(request):
                 if user.is_active:
                     django_login(request, user)
 
-                    if user.is_developer():
-                        return HttpResponseRedirect(reverse('developer_home'))
-                    else:
-                        return HttpResponseRedirect(reverse('dashboard_home'))
+                    return HttpResponseRedirect(reverse('dashboard_home'))
 
                 else:
                     # Return a 'disabled account' error message
