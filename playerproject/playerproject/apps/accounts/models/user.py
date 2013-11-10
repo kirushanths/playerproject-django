@@ -15,6 +15,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save, pre_save
 from django.core.urlresolvers import reverse
 
+from playerproject.apps.accounts.models import PPUserContactInfo
 from playerproject.libs.model.models import BaseModel, BaseModelManager
 
 class PPUserManager(BaseUserManager, BaseModelManager):
@@ -69,6 +70,13 @@ class PPUser(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     last_activity = models.DateTimeField(auto_now=False, null=True, blank=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+
+    contact_info = models.ForeignKey(
+        PPUserContactInfo,
+        related_name='+',
+        null=True,
+        blank=True
+    )
 
     user = PPUserManager()
 
