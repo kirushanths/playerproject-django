@@ -64,14 +64,14 @@ def register(request):
     return render(request, 'accounts/register.html', {'user_form': user_form})
 
 
-def developer_register(request):
+def recruit_register(request):
     if request.POST:
         user_form = PPUserModelForm(request.POST)
         if user_form.is_valid():
             # commit=False means the form doesn't save at this time.
             # commit defaults to True which means it normally saves.
             user = user_form.save(commit=False)
-            user.role = PPUser.ROLE_DEVELOPER
+            user.role = PPUser.ROLE_RECRUITER
             user.save()
             #redirect
             return HttpResponseRedirect(reverse('dashboard_home'))
@@ -81,5 +81,5 @@ def developer_register(request):
     else:
         user_form = PPUserModelForm()
 
-    return render(request, 'accounts/register_developer.html', {'user_form': user_form})
+    return render(request, 'accounts/register_recruiter.html', {'user_form': user_form})
 
