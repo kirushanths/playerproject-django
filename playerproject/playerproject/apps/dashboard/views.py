@@ -14,6 +14,7 @@ from playerproject.apps.dashboard.models import (
     PPHockeyPlayerStats,
     PPPlayerStats
 )
+from playerproject.apps.dashboard.forms import PPUserRecordForm
 
 def home(request):
     return render(request, 'dashboard/home.html')
@@ -24,4 +25,19 @@ def manager(request):
 
 
 def manager_add(request):
-    pass
+    if request.POST:
+        form = PPUserRecordForm(request.POST)
+        if form.is_valid():
+            # commit=False means the form doesn't save at this time.
+            # commit defaults to True which means it normally saves.
+            item = form.save(commit=False)
+            item.save()
+            #redirect
+            return HttpResponseRedirect(reverse('dashboard_manager'))
+        else:
+            print('error')
+            #failed
+    else:
+        form = PPUserRecordForm()
+
+    return render(request, 'dashboard/recordadd.html', { 'form':form })
