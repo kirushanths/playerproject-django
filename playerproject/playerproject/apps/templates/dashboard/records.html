@@ -1,0 +1,40 @@
+{% extends "base/_layout_standard.html" %}
+{% load staticfiles i18n %}
+{% load bootstrap %}
+
+{% block header_title %}
+	Manager
+{% endblock %}
+
+{% block main %}
+
+ <div class="container">
+  {% if records %}
+      <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in records %}
+        		<tr>
+        			<td>
+        				{{ record.first_name }}
+        			</td>
+              <td>
+                {{ record.last_name }}
+              </td>
+        		</tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% else %}
+        <p>No records were found.</p>
+      {% endif %}
+      
+    </div>
+
+{% endblock %}
