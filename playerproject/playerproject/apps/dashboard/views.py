@@ -31,6 +31,7 @@ def manager_add(request):
             # commit=False means the form doesn't save at this time.
             # commit defaults to True which means it normally saves.
             item = form.save(commit=False)
+            item.recorded_by = request.user
             item.save()
             #redirect
             return HttpResponseRedirect(reverse('dashboard_manager'))
