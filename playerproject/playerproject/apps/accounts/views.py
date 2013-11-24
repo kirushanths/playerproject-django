@@ -12,6 +12,9 @@ from .models import PPUser
 from .forms import PPUserModelForm, PPUserLoginForm
 
 def login(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('dashboard_home'))
+
     if request.POST:
         login_form = PPUserLoginForm(data=request.POST)
 

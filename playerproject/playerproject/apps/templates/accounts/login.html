@@ -2,18 +2,40 @@
 {% load staticfiles i18n %}
 {% load bootstrap %}
 
-{% block header_title %}
-	Sign into your account
-{% endblock %}
+{% block body_id %}landing{% endblock %}
 
 {% block main %}
 
-<div class="row">
-	<div class="col-xs-12 col-md-8 col-sm-10">
+<div id="landing-login" class="text-center">
+	<h3>theplayerproject</h3>
+
+	<div class="inner">
 		<form class="form-horizontal" role="form" method="post">
 			{% csrf_token %}
-			{{ form|bootstrap_horizontal }}
+			<div class="form-group">
+				<label class="control-label sr-only" for="id_username">Email</label>
+				<div class="">
+					<input class=" form-control" id="id_username" maxlength="254" name="username" type="text" placeholder="Email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label sr-only" for="id_password">Password</label>
+				<div class="">
+					<input class=" form-control" id="id_password" name="password" type="password" placeholder="Password">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="">
+					<input type="submit" class="btn btn-primary" name="submit" value="Sign In">
+				</div>
+			</div>
 		</form>
+
+		<div>
+			<a href="{% url 'account_register' %}">
+				Create Account
+			</a>
+		</div>
 	</div>
 </div>
 
