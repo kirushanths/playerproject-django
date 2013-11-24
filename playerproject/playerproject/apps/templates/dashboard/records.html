@@ -3,38 +3,40 @@
 {% load bootstrap %}
 
 {% block header_title %}
-	Manager
+Manager
+{% endblock %}
+
+{% block header_right %}
+	<a class="btn btn-primary pull-right" href="{% url 'dashboard_manager_add' %}">
+		Add Record
+	</a>
 {% endblock %}
 
 {% block main %}
 
- <div class="container">
-  {% if records %}
-      <table class="table table-striped table-hover table-bordered">
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for record in records %}
-        		<tr>
-        			<td>
-        				{{ record.first_name }}
-        			</td>
-              <td>
-                {{ record.last_name }}
-              </td>
-        		</tr>
-          {% endfor %}
-        </tbody>
-      </table>
-
-      {% else %}
-        <p>No records were found.</p>
-      {% endif %}
-      
-    </div>
+	{% if records %}
+		<table class="table table-striped table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for record in records %}
+				<tr>
+					<td>
+						{{ record.first_name }}
+					</td>
+					<td>
+						{{ record.last_name }}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No records were found.</p>
+	{% endif %}
 
 {% endblock %}
