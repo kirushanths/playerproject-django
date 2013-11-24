@@ -36,6 +36,9 @@ Manager
 			</tbody>
 		</table>
     {# Pagination #}
+    {% if records.paginator.num_pages > 1 %} 
+    {# Only show paginator if there are more than 1 pages #}
+      
     <div class="text-center">
       <ul class="pagination" >
               {# Previous Button #}
@@ -64,6 +67,9 @@ Manager
               {% endif %}
       </ul>
     </div>
+
+    {% endif %}
+
 	{% else %}
 		<p>No records were found.</p>
 	{% endif %}
