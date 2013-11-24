@@ -16,7 +16,7 @@ from playerproject.apps.dashboard.models import (
 )
 
 def home(request):
-    pass
+    return render(request, 'dashboard/home.html')
 
 
 def manager(request):

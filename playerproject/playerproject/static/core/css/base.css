@@ -9,7 +9,7 @@
     body, .btn, h1, h2, h3, h4, h5, h6 { font-weight:200; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; }
     label { font-weight:200; }
 
-    code.inverse { background-color:#3A0606; color:#c7254e; }
+    code.inverse { background-color:#333; color:#5B86E0; }
 
     .form-group { margin-right:5px; }
 
