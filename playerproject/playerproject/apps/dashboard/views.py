@@ -21,7 +21,7 @@ def home(request):
 
 
 def manager(request):
-	playerrecords = PPUserRecord.objects.filter(recorded_by = request.user.id).order_by('time_modified').order_by('time_modified')
+	playerrecords = PPUserRecord.objects.filter(recorded_by = request.user.id).order_by('time_modified')
 	return render(request,'dashboard/records.html', {'records': playerrecords})
 
 
