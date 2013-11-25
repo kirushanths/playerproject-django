@@ -17,10 +17,13 @@ from playerproject.apps.dashboard.models import (
 from playerproject.apps.dashboard.forms import PPUserRecordForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
+@login_required
 def home(request):
     return render(request, 'dashboard/home.html')
 
 
+@login_required
 def manager(request):
 	playerrecords = PPUserRecord.objects.filter(recorded_by = request.user.id).order_by('time_modified')
 	paginator = Paginator(playerrecords, 20) # Show 20 contacts per page
@@ -37,6 +40,7 @@ def manager(request):
 	return render(request,'dashboard/records.html', {'records': records})
 
 
+@login_required
 def manager_add(request):
     if request.POST:
         form = PPUserRecordForm(request.POST)
@@ -55,3 +59,11 @@ def manager_add(request):
         form = PPUserRecordForm()
 
     return render(request, 'dashboard/recordadd.html', { 'form':form })
+
+
+@login_required
+def player(request, player_id):
+    return render(request, 'dashboard/player.html')
+
+
+

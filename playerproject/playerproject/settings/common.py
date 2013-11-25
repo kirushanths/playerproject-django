@@ -134,10 +134,6 @@ LOGGING = {
     }
 }
 
-# LOGIN_REDIRECT_URL = '/accounts/dashboard/'
-# LOGIN_URL = '/accounts/login/'
-# LOGOUT_URL = '/accounts/logout/'
-
 LOGIN_REDIRECT_URL = reverse_lazy('dashboard_home')
 LOGIN_URL = reverse_lazy('account_login')
 LOGOUT_URL = reverse_lazy('account_logout')

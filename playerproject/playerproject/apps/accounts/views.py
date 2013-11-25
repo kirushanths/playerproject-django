@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import (
+    REDIRECT_FIELD_NAME,
     authenticate as django_auth,
     login as django_login,
     logout as django_logout
@@ -8,10 +9,22 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+
+from django.utils.http import is_safe_url
+from django.shortcuts import resolve_url
+
+from playerproject import settings
+
 from .models import PPUser
 from .forms import PPUserModelForm, PPUserLoginForm
 
-def login(request):
+@sensitive_post_parameters()
+@csrf_protect
+@never_cache
+def login(request, redirect_field_name=REDIRECT_FIELD_NAME):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('dashboard_home'))
 
@@ -25,9 +38,16 @@ def login(request):
 
             if user is not None:
                 if user.is_active:
+                    redirect_to = request.POST.get(redirect_field_name,
+                                   request.GET.get(redirect_field_name, ''))
+
+                    # Ensure the user-originating redirection url is safe.
+                    if not is_safe_url(url=redirect_to, host=request.get_host()):
+                        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+
                     django_login(request, user)
 
-                    return HttpResponseRedirect(reverse('dashboard_home'))
+                    return HttpResponseRedirect(redirect_to)
 
                 else:
                     # Return a 'disabled account' error message
