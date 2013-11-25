@@ -15,6 +15,7 @@ from playerproject.apps.dashboard.models import (
     PPPlayerStats
 )
 from playerproject.apps.dashboard.forms import PPUserRecordForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def home(request):
     return render(request, 'dashboard/home.html')
@@ -22,7 +23,18 @@ def home(request):
 
 def manager(request):
 	playerrecords = PPUserRecord.objects.filter(recorded_by = request.user.id).order_by('time_modified')
-	return render(request,'dashboard/records.html', {'records': playerrecords})
+	paginator = Paginator(playerrecords, 20) # Show 20 contacts per page
+	page = request.GET.get('page')
+	try:
+		records = paginator.page(page)
+	except PageNotAnInteger:
+	    # If page is not an integer, deliver first page.
+		records = paginator.page(1)
+	except EmptyPage:
+	    # If page is out of range (e.g. 9999), deliver last page of results.
+		records = paginator.page(paginator.num_pages)
+
+	return render(request,'dashboard/records.html', {'records': records})
 
 
 def manager_add(request):

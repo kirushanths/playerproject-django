@@ -35,6 +35,41 @@ Manager
 				{% endfor %}
 			</tbody>
 		</table>
+    {# Pagination #}
+    {% if records.paginator.num_pages > 1 %} 
+    {# Only show paginator if there are more than 1 pages #}
+      
+    <div class="text-center">
+      <ul class="pagination" >
+              {# Previous Button #}
+              {% if records.has_previous %}
+                  <li><a href="?page={{ records.previous_page_number }}">&laquo;</a></li>
+              {% else %}
+                  <li class="disabled"><a>&laquo;</a></li>
+              {% endif %}
+
+              {# Page Numbers #}
+              {% for num in records.paginator.page_range %}
+                {# Current Page bold #}
+                {% ifequal num records.number %}
+                  <li class="active"><a href="?page={{ num }}" >{{ num }}</a></li>
+                {# Other Page number #}
+                {% else %}
+                  <li><a href="?page={{ num }}"> {{ num }}</a></li>
+                {% endifequal %} 
+              {% endfor %}
+
+              {# Next Button #}
+              {% if records.has_next %}
+                  <li><a href="?page={{ records.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                  <li class="disabled"><a>&raquo;</a></li>
+              {% endif %}
+      </ul>
+    </div>
+
+    {% endif %}
+
 	{% else %}
 		<p>No records were found.</p>
 	{% endif %}
