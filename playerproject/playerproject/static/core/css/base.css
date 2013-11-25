@@ -12,6 +12,7 @@
     code.inverse { background-color:#333; color:#5B86E0; }
 
     .form-group { margin-right:5px; }
+    .form-horizontal .btn { margin-right:10px; }
 
     th { font-weight:400; color:#999; }
     .table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td { padding:8px 15px; }

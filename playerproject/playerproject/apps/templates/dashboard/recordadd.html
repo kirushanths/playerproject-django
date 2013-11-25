@@ -13,6 +13,14 @@
 		<form class="form-horizontal" method="post">
 			{% csrf_token %}
 			{{ form|bootstrap_horizontal }}
+
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-lg-3" for="id_submit"></label>
+				<div class=" col-sm-9 col-lg-9">
+					<input type="submit" class="btn btn-primary" name="submit" value="Create Record">
+					<a class="btn btn-default" href="{% url 'dashboard_manager' %}">Cancel</a>
+				</div>
+			</div>
 		</form>
 	</div>
 </div>
