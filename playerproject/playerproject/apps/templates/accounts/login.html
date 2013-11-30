@@ -10,13 +10,19 @@
 	<h3>theplayerproject</h3>
 
 	<div class="inner">
-		<form class="form-horizontal" role="form" method="post">
+		<form class="form" role="form" method="post">
 			{% csrf_token %}
+			<div>
+				{{ form.username.errors }}
+			</div>
 			<div class="form-group">
 				<label class="control-label sr-only" for="id_username">Email</label>
 				<div class="">
 					<input class=" form-control" id="id_username" maxlength="254" name="username" type="text" placeholder="Email">
 				</div>
+			</div>
+			<div>
+				{{ form.password.errors }}
 			</div>
 			<div class="form-group">
 				<label class="control-label sr-only" for="id_password">Password</label>
