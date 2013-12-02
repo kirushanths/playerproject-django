@@ -72,9 +72,8 @@ def register(request):
     if request.POST:
         user_form = PPUserModelForm(request.POST)
         if user_form.is_valid():
-            # commit=False means the form doesn't save at this time.
-            # commit defaults to True which means it normally saves.
             user = user_form.save(commit=False)
+            user.role = PPUser.ROLE_RECRUITER
             user.save()
             #redirect
             return HttpResponseRedirect(reverse('dashboard_home'))
@@ -88,6 +87,7 @@ def register(request):
 
 
 def recruit_register(request):
+    pass
     if request.POST:
         user_form = PPUserModelForm(request.POST)
         if user_form.is_valid():

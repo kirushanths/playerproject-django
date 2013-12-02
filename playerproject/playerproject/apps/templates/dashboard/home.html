@@ -1,13 +1,61 @@
-{% extends "base/_layout_standard.html" %}
+{% extends "base/_layout_bare.html" %}
 {% load staticfiles i18n %}
 {% load bootstrap %}
 
 {% block header_title %}
-	Dashboard
+Dashboard
 {% endblock %}
 
 {% block main %}
 
-<div>Dashboard</div>
+<div class="dashboard">
+
+	<ol class="breadcrumb">
+		<li class="active">Dashboard</li>
+	</ol>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="panel">
+				<div class="panel-body">
+					<h4 class="text-primary">
+						Recent Records
+						<a href="{% url 'dashboard_manager_add' %}" class="pull-right text-primary">
+							<i class="glyphicon glyphicon-plus"></i>
+						</a>
+					</h4>
+					<ul class="list-unstyled">
+						<li><a class="text-muted" href="#">Matts Sudin</a></li>
+						<li><a class="text-muted" href="#">Matts Sudin</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel">
+				<div class="panel-body">
+
+					<h4 class="text-primary">
+						Calendar
+						<a href="{% url 'dashboard_manager_add' %}" class="pull-right text-primary">
+							<i class="glyphicon glyphicon-plus"></i>
+						</a>
+					</h4>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="col-sm-8">
+
+			<div class="panel">
+				<div class="panel-body">
+					<h4 class="text-primary">News Feed</h4>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>
 
 {% endblock %}

@@ -14,6 +14,12 @@
     .form-group { margin-right:5px; }
     .form-horizontal .btn { margin-right:10px; }
 
+    .rounded {
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
     th { font-weight:400; color:#999; }
     .table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td { padding:8px 15px; }
 
@@ -23,7 +29,8 @@
 
     .navbar { margin-bottom:0; }
     .navbar .btn-toolbar { margin-top:0; }
-    
+
+/** PAGES **/    
     /* LANDING */
 
     #landing { padding-top:50px; }
@@ -49,10 +56,15 @@
         list-style-type:none;
     }
 
-    .rounded {
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-    }
+    /* DASHBOARD */
+
+    .dashboard .breadcrumb { margin:20px 0 10px; }
+    .dashboard .panel { margin:0; }
+    .dashboard .panel-body { padding:0px 15px; }
+    .dashboard .panel li:first-child { border-top:1px solid #eee; }
+    .dashboard .panel li { padding:5px; border-bottom:1px solid #eee; }
+    .dashboard .panel li a { display:block; }
+
+    .dashboard h4 {  }
 
     
