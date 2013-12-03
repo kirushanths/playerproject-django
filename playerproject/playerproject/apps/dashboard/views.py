@@ -37,7 +37,7 @@ def manager(request):
 	    # If page is out of range (e.g. 9999), deliver last page of results.
 		records = paginator.page(paginator.num_pages)
 
-	return render(request,'dashboard/records.html', {'records': records})
+	return render(request,'dashboard/records.html', { 'records': records, 'paginator': paginator })
 
 
 @login_required
