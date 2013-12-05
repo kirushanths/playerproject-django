@@ -67,6 +67,9 @@ Manager
 					</div>
 				</div>
 				<div class="media-body">
+					<a href="{% url 'dashboard_player_stats_update' record.id %}" class="btn btn-danger pull-right">
+						Update Stats
+					</a>
 					<h4 class="media-heading">
 						<a class="text-info" href="{% url 'dashboard_player' record.id %}">{{ record.first_name }} {{ record.last_name }}</a>
 					</h4>
