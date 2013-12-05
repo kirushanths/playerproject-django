@@ -63,7 +63,9 @@ def manager_add(request):
 
 @login_required
 def player(request, player_id):
-    return render(request, 'dashboard/player.html')
+    basicinfo =  PPUserRecord.objects.get(id = player_id)
+    stats = PPPlayerStats.objects.get(id = player_id)
+    return render(request, 'dashboard/player.html', {'basicinfo' : basicinfo, 'stats': stats} )
 
 
 
