@@ -65,7 +65,8 @@ def manager_add(request):
 def player(request, player_id):
     basicinfo =  PPUserRecord.objects.get(id = player_id)
     stats = PPPlayerStats.objects.get(id = player_id)
-    return render(request, 'dashboard/player.html', {'basicinfo' : basicinfo, 'stats': stats} )
+    hockeystats = PPHockeyPlayerStats.objects.get(ppplayerstats_ptr_id = player_id)
+    return render(request, 'dashboard/player.html', {'basicinfo' : basicinfo, 'stats': stats , 'hockeystats': hockeystats} )
 
 
 
