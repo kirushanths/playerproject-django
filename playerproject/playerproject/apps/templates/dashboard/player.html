@@ -65,10 +65,10 @@
 				  </thead>
 				  <tbody>
 				    <tr>
-				      <td>{{ hockeystats.position }}</td>
-				      <td>{{ hockeystats.goals }}</td>
-				      <td>{{ hockeystats.assists }}</td>
-				      <td>{{ hockeystats.points }}</td>
+				      <td>{{ stats.position }}</td>
+				      <td>{{ stats.goals }}</td>
+				      <td>{{ stats.assists }}</td>
+				      <td>{{ stats.points }}</td>
 				    </tr>
 				  </tbody>
 				</table>
@@ -88,7 +88,7 @@
 										strokeColor : "rgba(151,187,205,1)",
 										pointColor : "rgba(151,187,205,1)",
 										pointStrokeColor : "#fff",
-										data : [{{ hockeystats.goals }}, {{ hockeystats.assists }}, {{ hockeystats.points }}]
+										data : [{{ stats.goals }}, {{ stats.assists }}, {{ stats.points }}]
 									}
 								]
 							}
