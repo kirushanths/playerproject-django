@@ -1,4 +1,4 @@
-{% extends "base/_layout_standard.html" %}
+{% extends "base/_layout_bare.html" %}
 {% load staticfiles i18n %}
 {% load bootstrap %}
 
@@ -6,72 +6,119 @@
 Manager
 {% endblock %}
 
-{% block header_right %}
-	<a class="btn btn-primary pull-right" href="{% url 'dashboard_manager_add' %}">
-		Add Record
-	</a>
-{% endblock %}
-
 {% block main %}
 
+<div class="dashboard">
+
+	<ol class="breadcrumb">
+		<li class=""><a href="{% url 'dashboard_home' %}">Dashboard</a></li>
+		<li class="active">Records</li>
+	</ol>
+
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<a class="btn btn-primary" href="{% url 'dashboard_manager_add' %}">
+				<i class="glyphicon glyphicon-plus"></i>
+			</a>
+		</div>
+
+		<div class="btn-group">
+			<button class="btn btn-default">
+				<i class="glyphicon glyphicon-stats"></i>
+				&nbsp;&nbsp;Compare
+			</button>
+			<button class="btn btn-default"><i class="glyphicon glyphicon-star"></i>
+				&nbsp;&nbsp;Star
+			</button>
+			<button class="btn btn-default"><i class="glyphicon glyphicon-trash"></i>
+				&nbsp;&nbsp;Delete
+			</button>
+
+		</div>
+
+		<div class="btn-group">
+			<button class="btn btn-default"><i class="glyphicon glyphicon-sort-by-alphabet"></i></button>
+		</div>
+
+		<div class="btn-group pull-right">
+			<span class="btn">{{ paginator.count }} Records</span>
+			<button class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i></button>
+			<button class="btn btn-default"><i class="glyphicon glyphicon-chevron-right"></i></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+
 	{% if records %}
-		<table class="table table-striped table-hover table-bordered">
-			<thead>
-				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for record in records %}
-				<tr>
-					<td>
-						{{ record.first_name }}
-					</td>
-					<td>
-						{{ record.last_name }}
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-    {# Pagination #}
-    {% if records.paginator.num_pages > 1 %} 
-    {# Only show paginator if there are more than 1 pages #}
-      
-    <div class="text-center">
-      <ul class="pagination" >
-              {# Previous Button #}
-              {% if records.has_previous %}
-                  <li><a href="?page={{ records.previous_page_number }}">&laquo;</a></li>
-              {% else %}
-                  <li class="disabled"><a>&laquo;</a></li>
-              {% endif %}
 
-              {# Page Numbers #}
-              {% for num in records.paginator.page_range %}
-                {# Current Page bold #}
-                {% ifequal num records.number %}
-                  <li class="active"><a href="?page={{ num }}" >{{ num }}</a></li>
-                {# Other Page number #}
-                {% else %}
-                  <li><a href="?page={{ num }}"> {{ num }}</a></li>
-                {% endifequal %} 
-              {% endfor %}
+	<div class="list-group">
 
-              {# Next Button #}
-              {% if records.has_next %}
-                  <li><a href="?page={{ records.next_page_number }}">&raquo;</a></li>
-              {% else %}
-                  <li class="disabled"><a>&raquo;</a></li>
-              {% endif %}
-      </ul>
-    </div>
+		{% for record in records %}
 
-    {% endif %}
+		<div class="list-group-item">
+			<div class="media">
+				<div class="pull-left">
+					<div class="btn-group btn-group-xs">
+						<a href="#" class="btn btn-link">
+							<i class="text-muted glyphicon glyphicon-star-empty"></i>
+						</a>
+						<a href="#" class="btn btn-link text-muted">
+							<i class="text-muted glyphicon glyphicon-unchecked"></i>
+						</a>
+					</div>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">
+						<a class="text-info" href="{% url 'dashboard_player' record.id %}">{{ record.first_name }} {{ record.last_name }}</a>
+					</h4>
+					<span>More details</span>
+				</div>
+			</div>
+		</div>
 
-	{% else %}
-		<p>No records were found.</p>
+		{% endfor %}
+
+	</div>
+
+	{# Pagination #}
+	{% if records.paginator.num_pages > 1 %} 
+	{# Only show paginator if there are more than 1 pages #}
+
+	<div class="text-center">
+		<ul class="pagination" >
+			{# Previous Button #}
+			{% if records.has_previous %}
+			<li><a href="?page={{ records.previous_page_number }}">&laquo;</a></li>
+			{% else %}
+			<li class="disabled"><a>&laquo;</a></li>
+			{% endif %}
+
+			{# Page Numbers #}
+			{% for num in records.paginator.page_range %}
+			{# Current Page bold #}
+			{% ifequal num records.number %}
+			<li class="active"><a href="?page={{ num }}" >{{ num }}</a></li>
+			{# Other Page number #}
+			{% else %}
+			<li><a href="?page={{ num }}"> {{ num }}</a></li>
+			{% endifequal %} 
+			{% endfor %}
+
+			{# Next Button #}
+			{% if records.has_next %}
+			<li><a href="?page={{ records.next_page_number }}">&raquo;</a></li>
+			{% else %}
+			<li class="disabled"><a>&raquo;</a></li>
+			{% endif %}
+		</ul>
+	</div>
+
 	{% endif %}
 
+	{% else %}
+	<p>No records were found.</p>
+	{% endif %}
+
+</div>
+
 {% endblock %}
+

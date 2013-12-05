@@ -19,14 +19,15 @@ Dashboard
 			<div class="panel">
 				<div class="panel-body">
 					<h4 class="text-primary">
-						Recent Players
+						<a class="text-primary" href="{% url 'dashboard_manager' %}">Recent Players</a>
 						<a href="{% url 'dashboard_manager_add' %}" class="pull-right text-primary">
 							<i class="glyphicon glyphicon-plus"></i>
 						</a>
 					</h4>
 					<ul class="list-unstyled">
-						<li><a class="text-muted" href="#">Matts Sudin</a></li>
-						<li><a class="text-muted" href="#">Matts Sudin</a></li>
+						<li><a class="text-muted" href="{% url 'dashboard_manager' %}">Matts Sudin</a></li>
+						<li><a class="text-muted" href="{% url 'dashboard_manager' %}">Matts Sudin</a></li>
+						<li><a class="" href="{% url 'dashboard_manager' %}">See more</a></li>
 					</ul>
 				</div>
 			</div>
