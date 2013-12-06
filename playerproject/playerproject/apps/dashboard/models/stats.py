@@ -9,8 +9,8 @@ from playerproject.libs.model.models import BaseModel
 
 class PPPlayerStats (BaseModel):
     POSITION_NOT_SPECIFIED = 'not_specified'
-    height_feet = models.IntegerField(null=True, blank=True)
-    height_inches = models.IntegerField(null=True, blank=True)
+    height_feet = models.PositiveIntegerField(null=True, blank=True)
+    height_inches = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         abstract = True
