@@ -1,15 +1,21 @@
-{% extends "base/_layout_standard.html" %}
+{% extends "base/_layout_bare.html" %}
 {% load staticfiles i18n %}
 {% load bootstrap %}
 
-
 {% block header_title %}
-	Player
+Player
 {% endblock %}
 
 {% block main %}
 
-<div class="container">
+<div class="dashboard">
+
+	<ol class="breadcrumb">
+		<li class=""><a href="{% url 'dashboard_home' %}">Dashboard&nbsp;</a></li>
+		<li class=""><a href="{% url 'dashboard_manager' %}">Records&nbsp;</a></li>
+		<li class="active">{{ basicinfo.first_name }} {{ basicinfo.last_name }}</li>
+	</ol>
+
 	<div class="row">
   			<div class="col-md-3">
               <div class="well">
