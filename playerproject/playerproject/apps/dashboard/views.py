@@ -66,12 +66,7 @@ def manager_add(request):
 @login_required
 def player_stats_update(request, player_id):
     record =  PPHockeyUserRecord.objects.get(id = player_id)
-    stats = None
-    
-    try:
-        stats = PPHockeyPlayerStats.objects.get(id=record.stats)
-    except PPHockeyPlayerStats.DoesNotExist:
-        pass
+    stats = record.stats
 
     if request.POST:
         if record.is_goalie():
@@ -82,9 +77,10 @@ def player_stats_update(request, player_id):
             # commit=False means the form doesn't save at this time.
             # commit defaults to True which means it normally saves.
             item = form.save(commit=False)
-            record.stats = item.id
-            record.save()
             item.save()
+
+            record.stats = item
+            record.save()
 
             return HttpResponseRedirect(reverse('dashboard_manager'))
         else:
