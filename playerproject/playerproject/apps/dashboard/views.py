@@ -15,7 +15,7 @@ from playerproject.apps.dashboard.models import (
     PPHockeyPlayerStats,
     PPPlayerStats
 )
-from playerproject.apps.dashboard.forms import PPHockeyUserRecordForm, PPHockeyPlayerStatsForm
+from playerproject.apps.dashboard.forms import PPHockeyUserRecordForm, PPHockeyGoalieStatsForm, PPHockeySkaterStatsForm
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import inlineformset_factory
@@ -69,7 +69,10 @@ def player_stats_update(request, player_id):
     stats = record.stats
 
     if request.POST:
-        form = PPHockeyPlayerStatsForm(request.POST)
+        if record.is_goalie():
+            form = PPHockeyGoalieStatsForm(request.POST)
+        else:
+            form = PPHockeySkaterStatsForm(request.POST)
         if form.is_valid():
             # commit=False means the form doesn't save at this time.
             # commit defaults to True which means it normally saves.
@@ -84,7 +87,11 @@ def player_stats_update(request, player_id):
             print('error')
             #failed
     else:
-        form = PPHockeyPlayerStatsForm(instance=stats)
+        if record.is_goalie():
+            form = PPHockeyGoalieStatsForm(instance=stats)
+        else:
+            form = PPHockeySkaterStatsForm(instance=stats)
+
 
     return render(request, 'dashboard/playeradd.html', { 'form':form } )
 

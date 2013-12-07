@@ -1,21 +1,19 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from playerproject.apps.dashboard.models import PPHockeyUserRecord, PPHockeyPlayerStats
+from playerproject.apps.dashboard.models import PPHockeyUserRecord, PPHockeyPlayerStats, PPHockeyGoalieStats, PPHockeySkaterStats
 from playerproject.libs.fields import SubmitButtonField
 
 class PPHockeyUserRecordForm(forms.ModelForm):
     class Meta:
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'position']
         model = PPHockeyUserRecord
 
-
-class PPHockeyPlayerStatsForm(forms.ModelForm):
+class PPHockeySkaterStatsForm(forms.ModelForm):
     class Meta:
-        model = PPHockeyPlayerStats
+        model = PPHockeySkaterStats
         fields = [  'height_feet', 
                     'height_inches',
-                    'position', 
                     'shoots', 
                     'games_played', 
                     'penalty_minutes', 
@@ -25,7 +23,18 @@ class PPHockeyPlayerStatsForm(forms.ModelForm):
                     'goals', 
                     'assists', 
                     'points', 
-                    'plus_minus', 
+                    'plus_minus',]
+
+class PPHockeyGoalieStatsForm(forms.ModelForm):
+    class Meta:
+        model = PPHockeyGoalieStats
+        fields = [  'height_feet', 
+                    'height_inches',
+                    'games_played', 
+                    'penalty_minutes', 
+                    'wins', 
+                    'losses', 
+                    'ties',
                     'save_percentage', 
                     'saves', 
                     'goals_against', 
@@ -34,3 +43,4 @@ class PPHockeyPlayerStatsForm(forms.ModelForm):
                     'shutouts',
                     'minutes',
                     'games_started']
+    

@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from playerproject.libs.model.models import BaseModel
 from playerproject.apps.accounts.models import PPUser, PPUserContactInfo
-from playerproject.apps.dashboard.models.stats import PPHockeyPlayerStats
+from playerproject.apps.dashboard.models.stats import PPHockeyPlayerStats, PPPlayerStats
 
 class PPUserRecord (BaseModel):
     first_name = models.CharField(_('first name'), max_length=50, null=True, blank=True)
@@ -34,13 +34,35 @@ class PPUserRecord (BaseModel):
 
 
 class PPHockeyUserRecord(PPUserRecord):
-    
+     # Playing Position
+    POSITION_ANY = 'any'   
+    POSITION_ANY_OFFENSE = 'any_forward'
+    POSITION_ANY_DEFENSE = 'any_defense'
+    POSITION_GOALIE = 'G'
+
+    POSITION_CHOICES = (
+        (PPPlayerStats.POSITION_NOT_SPECIFIED, 'Unspecified'),
+        (POSITION_ANY, 'Any'),
+        (POSITION_ANY_OFFENSE, 'Offense'),
+        (POSITION_ANY_DEFENSE, 'Defense'),
+        (POSITION_GOALIE, 'G'),
+    )
+
+    position = models.CharField(
+        max_length=30,
+        choices=POSITION_CHOICES,
+        default=PPPlayerStats.POSITION_NOT_SPECIFIED)
+
     stats = models.ForeignKey(
         PPHockeyPlayerStats,
         related_name='+',
         null=True,
         blank=True
     )
+
+    # Check if position is goalie
+    def is_goalie(self): 
+        return self.position == self.POSITION_GOALIE
 
     class Meta:
         app_label = 'dashboard'
