@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from playerproject.libs.model.models import BaseModel
 from playerproject.apps.accounts.models import PPUser, PPUserContactInfo
 from playerproject.apps.dashboard.models.stats import PPHockeyPlayerStats, PPPlayerStats
+from playerproject.apps.dashboard.models.note import PPUserNote
 
 class PPUserRecord (BaseModel):
     first_name = models.CharField(_('first name'), max_length=50, null=True, blank=True)
@@ -26,6 +27,11 @@ class PPUserRecord (BaseModel):
         related_name='+',
         null=True,
         blank=True
+    )
+
+    notes = models.ManyToManyField(
+        PPUserNote,
+        related_name='+'
     )
 
     class Meta:
@@ -66,3 +72,4 @@ class PPHockeyUserRecord(PPUserRecord):
 
     class Meta:
         app_label = 'dashboard'
+
