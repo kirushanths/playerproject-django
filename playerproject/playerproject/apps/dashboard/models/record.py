@@ -45,7 +45,7 @@ class PPHockeyUserRecord(PPUserRecord):
         (POSITION_ANY, 'Any'),
         (POSITION_ANY_OFFENSE, 'Offense'),
         (POSITION_ANY_DEFENSE, 'Defense'),
-        (POSITION_GOALIE, 'G'),
+        (POSITION_GOALIE, 'Goalie'),
     )
 
     position = models.CharField(
