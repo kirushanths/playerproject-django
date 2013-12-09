@@ -28,6 +28,12 @@
             <link rel="stylesheet" href="{% static "core/css/responsive.css" %}" type="text/css" />
         {% endblock %}
 
+        {% block javascript %}
+            <script src="{% static "core/libs/jquery/jquery-2.0.3.min.js" %}" type="text/javascript"></script>
+            <script src="{% static "todc-bootstrap/js/bootstrap.min.js" %}" type="text/javascript"></script>
+            <script src="{% static "core/libs/holder.min.js" %}" type="text/javascript"></script>
+        {% endblock %}
+
         {% block extra_head %}{% endblock %}
     </head>
     <body id="{% block body_id %}{% endblock %}">
@@ -41,11 +47,7 @@
             </div>
         </div>
 
-        {% block javascript %}
-            <script src="{% static "core/libs/jquery/jquery-2.0.3.min.js" %}" type="text/javascript"></script>
-            <script src="{% static "todc-bootstrap/js/bootstrap.min.js" %}" type="text/javascript"></script>
-            <script src="{% static "core/libs/holder.min.js" %}" type="text/javascript"></script>
-        {% endblock %}
+
     </body>
 </html>
 
