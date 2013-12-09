@@ -23,6 +23,7 @@ class PPHockeySkaterStatsForm(forms.ModelForm):
                     'goals', 
                     'assists', 
                     'points', 
+                    'shots_on_goal', 
                     'plus_minus',]
 
 class PPHockeyGoalieStatsForm(forms.ModelForm):
@@ -39,7 +40,6 @@ class PPHockeyGoalieStatsForm(forms.ModelForm):
                     'saves', 
                     'goals_against', 
                     'goals_against_avg', 
-                    'shots_on_goal', 
                     'shutouts',
                     'minutes',
                     'games_started']

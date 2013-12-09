@@ -53,6 +53,7 @@ class PPHockeySkaterStats(PPHockeyPlayerStats):
     assists = models.PositiveIntegerField(default=0)
     points = models.PositiveIntegerField(default=0)
     plus_minus = models.IntegerField(default=0)
+    shots_on_goal = models.PositiveIntegerField(default=0)
     
 
 class PPHockeyGoalieStats(PPHockeyPlayerStats):
@@ -61,7 +62,6 @@ class PPHockeyGoalieStats(PPHockeyPlayerStats):
     saves = models.PositiveIntegerField(default=0)
     goals_against = models.PositiveIntegerField(default=0)
     goals_against_avg = models.DecimalField(max_digits=6, decimal_places=3, default=0)
-    shots_on_goal = models.PositiveIntegerField(default=0)
     shutouts = models.PositiveIntegerField(default=0)
     minutes = models.PositiveIntegerField(default=0)
     games_started = models.PositiveIntegerField(default=0)
