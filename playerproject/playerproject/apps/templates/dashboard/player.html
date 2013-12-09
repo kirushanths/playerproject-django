@@ -64,18 +64,50 @@
               	<table class="table table-striped table-hover  stats-table">
 				  <thead>
 				    <tr>
-				      <th>Position</th>
-				      <th>Goals</th>
-				      <th>Assists</th>
-				      <th>Points</th>
+				      <th>P</th>
+				      <th>GP</th>
+				      {% if is_goalie %}
+					      <th>GS</th>
+					      <th>MIN</th>
+					      <th>W</th>
+				     	  <th>L</th>
+				     	  <th>T</th>
+					      <th>GA</th>
+					      <th>GAA</th>
+					      <th>SV</th>
+					      <th>SV%</th>
+					      <th>SO</th>
+				      {% else %}
+					      <th>G</th>
+				     	  <th>A</th>
+				     	  <th>P</th>
+					      <th>+/-</th>
+					      <th>PIM</th>
+					  {% endif %}
 				    </tr>
 				  </thead>
 				  <tbody>
 				    <tr>
-				      <td>{{ stats.position }}</td>
-				      <td>{{ stats.goals }}</td>
-				      <td>{{ stats.assists }}</td>
-				      <td>{{ stats.points }}</td>
+				      <td>{{ basicinfo.position }}</td>
+				      <td>{{ stats.games_played }}</td>
+				      {% if is_goalie %}
+				    	  <td>{{ stats.games_started }}</td>
+				    	  <td>{{ stats.minutes }}</td>
+				    	  <td>{{ stats.wins }}</td>
+				    	  <td>{{ stats.losses }}</td>
+				    	  <td>{{ stats.ties }}</td>
+				    	  <td>{{ stats.goals_against }}</td>
+				    	  <td>{{ stats.goals_against_avg }}</td>
+				    	  <td>{{ stats.saves }}</td>
+				    	  <td>{{ stats.save_percentage }}</td>
+				    	  <td>{{ stats.shutouts }}</td>
+				      {% else %}
+				    	  <td>{{ stats.goals }}</td>
+				    	  <td>{{ stats.assists }}</td>
+				    	  <td>{{ stats.points }}</td>
+				    	  <td>{{ stats.plus_minus }}</td>
+				    	  <td>{{ stats.penalty_minutes }}</td>
+				      {% endif %}
 				    </tr>
 				  </tbody>
 				</table>
@@ -88,14 +120,22 @@
               		//Get the context of the canvas element we want to select
 					var ctx = document.getElementById("statsChart").getContext("2d");
 					var data = {
-					labels : ["Goals", "Assists", "Points"],
+						{% if is_goalie %}
+					labels : ["GP", "GS", "MIN", "W", "L", "T", "GA", "GAA", "SV", "SV%", "SO"],
+						{% else %}
+					labels : ["GP", "G", "A", "P", "+/-", "PIM"],
+						{% endif %}
 					datasets : [
 									{
 										fillColor : "rgba(151,187,205,0.5)",
 										strokeColor : "rgba(151,187,205,1)",
 										pointColor : "rgba(151,187,205,1)",
 										pointStrokeColor : "#fff",
-										data : [{{ stats.goals }}, {{ stats.assists }}, {{ stats.points }}]
+										{% if is_goalie %}
+										data : [{{ stats.games_played }}, {{ stats.games_started }}, {{ stats.minutes }}, {{stats.wins}}, {{stats.losses}}, {{stats.ties}}, {{stats.goals_against}}, {{stats.goals_against_avg}}, {{stats.saves}}, {{stats.save_percentage}}, {{stats.shutouts}}]
+										{% else %}
+										data : [{{ stats.games_played }}, {{ stats.goals }}, {{ stats.assists }}, {{ stats.points }}, {{ stats.plus_minus }}, {{ stats.penalty_minutes }}]
+										{% endif %}
 									}
 								]
 							}
@@ -119,16 +159,14 @@
 						if($(this).hasClass('showing-table')){
 							$(this).removeClass('showing-table');
 							$(this).addClass('showing-graph');
-							$(this).text('Show Table');
+							$(this).text('Hide Graph');
 						}else if ($(this).hasClass('showing-graph')) {
 							$(this).removeClass('showing-graph');
 							$(this).addClass('showing-table');
 							$(this).text('Show Graph');
 						}
 						$('#statsChart').toggle('slow');
-						$('.stats-table').toggle('slow');
 					});
-
               	</script>
               	
       		</div>

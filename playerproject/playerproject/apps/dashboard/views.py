@@ -13,7 +13,9 @@ from playerproject.apps.dashboard.models import (
     PPUserRecord,
     PPHockeyUserRecord,
     PPHockeyPlayerStats,
-    PPPlayerStats
+    PPPlayerStats, 
+    PPHockeySkaterStats,
+    PPHockeyGoalieStats
 )
 from playerproject.apps.dashboard.forms import PPHockeyUserRecordForm, PPHockeyGoalieStatsForm, PPHockeySkaterStatsForm
 
@@ -98,8 +100,13 @@ def player_stats_update(request, player_id):
 @login_required
 def player(request, player_id):
     record =  PPHockeyUserRecord.objects.get(id = player_id)
-    stats = record.stats
-    return render(request, 'dashboard/player.html', {'basicinfo' : record, 'stats': stats} )
+    is_goalie = record.is_goalie()
+    if is_goalie:
+        stats = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = record.stats.id)
+    else:
+        stats = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = record.stats.id)
+
+    return render(request, 'dashboard/player.html', {'basicinfo' : record, 'stats': stats, 'is_goalie': is_goalie} )
 
 
 
