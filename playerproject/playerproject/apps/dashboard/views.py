@@ -70,7 +70,7 @@ def manager_add(request):
 def manager_compare(request, player_ids):
     id_list = player_ids.split('/')
     players = list(PPHockeyUserRecord.objects.filter(id__in=id_list))
-
+    return render(request, 'dashboard/recordcompare.html')
 
 
 @login_required
