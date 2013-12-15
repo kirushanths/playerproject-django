@@ -36,7 +36,7 @@ ngapp.controller('InboxController', function($scope, $http, $route, $routeParams
         	userid = false;
         }
 
-        var isCompose = (renderAction== "compose");
+        var isCompose = (renderAction == "compose");
 
         $scope.target_user_id = userid;
         $scope.compose = isCompose

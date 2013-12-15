@@ -71,4 +71,9 @@
 
     .dashboard .btn-toolbar { margin:15px 0; }
 
-    
+    /* Manager */
+
+    #manager .glyphicon-ok { color:green; }
+    #manager .list-group .active { background-color:lightyellow; }
+
+
