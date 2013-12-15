@@ -48,4 +48,17 @@ $('ul.tabs').each(function(){
 			}
 			$('#statsChart').toggle('slow');
 	});
+
+// Add Notes Button Toggle 
+	$('.add-note').on('click', function(){
+			$('.notes-display').toggle();
+			$('.note-form').toggle();
+			$(this).toggle();
+
+	});
+	$('.cancel-notes').on('click', function(){
+			$('.notes-display').toggle();
+			$('.note-form').toggle();
+			$('.add-note').toggle();
+	});
 });

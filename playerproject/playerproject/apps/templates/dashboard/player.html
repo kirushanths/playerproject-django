@@ -148,12 +148,21 @@
         </div>
 
         <div id="notes">
+			<a class="btn btn-primary pull-right add-note">Add Note<br></a>
+
 				<h3>Player Notes</h3>
+			<div class="notes-display">      
+
 	         {% for note in basicinfo.notes.all %}
-	         	<h4>{{ note.title }}</h4>
-	         	<p>{{ note.content }}</p>
+	         <div class="panel panel-default">
+	         	<div class="panel-heading"><h4>{{ note.title }}<h4></div>
+        		<div class="panel-body">{{ note.content }}</div>
+	         </div>
+	         	<hr>
+
 	         {% endfor %}
-	        <form class="form-horizontal note-form" method="post">
+	         </div>	
+	        <form class="form-horizontal note-form" method="post" style="display:none;">
 				{% csrf_token %}
 
 				{{ form|bootstrap_horizontal }}
@@ -162,6 +171,7 @@
 					<label class="control-label col-sm-3 col-lg-3" for="id_submit"></label>
 					<div class=" col-sm-9 col-lg-9">
 						<input type="submit" class="btn btn-primary" name="submit" value="Add Note">
+						<a class="btn btn-default cancel-notes" href="#notes">Cancel</a>
 					</div>
 				</div>
 			</form>
