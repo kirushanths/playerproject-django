@@ -115,7 +115,7 @@ def player(request, player_id):
             item.save()
             record.notes.add(item)
 
-            return HttpResponseRedirect('')
+            return HttpResponseRedirect('#notes')
         else:
             print('error')
             #failed
