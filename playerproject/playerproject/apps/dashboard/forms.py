@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from playerproject.apps.dashboard.models import PPHockeyUserRecord, PPHockeyPlayerStats, PPHockeyGoalieStats, PPHockeySkaterStats
+from playerproject.apps.dashboard.models import PPHockeyUserRecord, PPHockeyPlayerStats, PPHockeyGoalieStats, PPHockeySkaterStats, PPUserNote
 from playerproject.libs.fields import SubmitButtonField
 
 class PPHockeyUserRecordForm(forms.ModelForm):
@@ -43,4 +43,9 @@ class PPHockeyGoalieStatsForm(forms.ModelForm):
                     'shutouts',
                     'minutes',
                     'games_started']
-    
+                    
+class PPUserNoteForm(forms.ModelForm):
+    class Meta:
+        model = PPUserNote
+        fields = [  'title',
+                    'content',]
