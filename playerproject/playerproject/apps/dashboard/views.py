@@ -101,10 +101,13 @@ def player_stats_update(request, player_id):
 def player(request, player_id):
     record =  PPHockeyUserRecord.objects.get(id = player_id)
     is_goalie = record.is_goalie()
-    if is_goalie:
-        stats = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = record.stats.id)
-    else:
-        stats = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = record.stats.id)
+    try:
+        if is_goalie:
+            stats = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = record.stats.id)
+        else:
+            stats = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = record.stats.id)
+    except:
+        stats=False
 
     if request.POST:
         form = PPUserNoteForm(request.POST)
