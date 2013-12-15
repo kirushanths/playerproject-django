@@ -117,6 +117,7 @@
               	<canvas id="statsChart" width="600" height="400" style="display:none;"></canvas>
 
               	<script type="text/javascript">
+             	domready(function () {
               		//Get the context of the canvas element we want to select
 					var ctx = document.getElementById("statsChart").getContext("2d");
 					var data = {
@@ -167,6 +168,7 @@
 						}
 						$('#statsChart').toggle('slow');
 					});
+				});
               	</script>
               	
       		</div>
