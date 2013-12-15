@@ -47,7 +47,7 @@
                   <a href="#">Stats Summary</a>
                 </li>
                 <li>
-                  <a href="#">About</a>
+                  <a href="#">Notes</a>
                 </li>
                 <li>
                   <a href="#">Contact</a>
@@ -112,7 +112,6 @@
 				  </tbody>
 				</table>
 
-
 				{# Graph Begins - Hidden by Default #}
               	<canvas id="statsChart" width="600" height="400" style="display:none;"></canvas>
 
@@ -168,8 +167,28 @@
 						}
 						$('#statsChart').toggle('slow');
 					});
+
 				});
               	</script>
+		<div class="well">
+			<h3>Player Notes</h3>
+         {% for note in basicinfo.notes.all %}
+         	<h4>{{ note.title }}</h4>
+         	<p>{{ note.content }}</p>
+         {% endfor %}
+        </div>
+        <form class="form-horizontal note-form" method="post">
+			{% csrf_token %}
+
+			{{ form|bootstrap_horizontal }}
+
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-lg-3" for="id_submit"></label>
+				<div class=" col-sm-9 col-lg-9">
+					<input type="submit" class="btn btn-primary" name="submit" value="Add Note">
+				</div>
+			</div>
+		</form>
               	
       		</div>
       	</div>              	

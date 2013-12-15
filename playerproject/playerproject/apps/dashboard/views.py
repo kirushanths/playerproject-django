@@ -17,7 +17,7 @@ from playerproject.apps.dashboard.models import (
     PPHockeySkaterStats,
     PPHockeyGoalieStats
 )
-from playerproject.apps.dashboard.forms import PPHockeyUserRecordForm, PPHockeyGoalieStatsForm, PPHockeySkaterStatsForm
+from playerproject.apps.dashboard.forms import PPHockeyUserRecordForm, PPHockeyGoalieStatsForm, PPHockeySkaterStatsForm, PPUserNoteForm, PPUserNote
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import inlineformset_factory
@@ -106,7 +106,23 @@ def player(request, player_id):
     else:
         stats = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = record.stats.id)
 
-    return render(request, 'dashboard/player.html', {'basicinfo' : record, 'stats': stats, 'is_goalie': is_goalie} )
+    if request.POST:
+        form = PPUserNoteForm(request.POST)
+        if form.is_valid():
+            # commit=False means the form doesn't save at this time.
+            # commit defaults to True which means it normally saves.
+            item = form.save(commit=False)
+            item.save()
+            record.notes.add(item)
+
+            return HttpResponseRedirect(reverse('dashboard_manager'))
+        else:
+            print('error')
+            #failed
+    else:
+        form = PPUserNoteForm()
+
+    return render(request, 'dashboard/player.html', {'basicinfo' : record, 'stats': stats, 'is_goalie': is_goalie, 'form':form} )
 
 
 
