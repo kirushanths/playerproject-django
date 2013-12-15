@@ -168,7 +168,8 @@
         		<div class="panel-body">{{ note.content }}</div>
 	         </div>
 	         	<hr>
-
+	         {% empty %}
+	         <p>No notes have been added.</p>
 	         {% endfor %}
 	         </div>	
 	        <form class="form-horizontal note-form" method="post" style="display:none;">
