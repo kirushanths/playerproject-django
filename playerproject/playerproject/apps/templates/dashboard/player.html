@@ -4,6 +4,7 @@
 
 {% block extra_head %}
 	<script src="{% static "player/js/chart.js" %}" type="text/javascript"></script>
+	<script src="{% static "player/js/player.js" %}" type="text/javascript"></script>
 {% endblock extra_head %}
 
 {% block header_title %}
@@ -42,12 +43,12 @@
               <!-- Brand Name -->
             </div>
             <div class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li class="active">
-                  <a href="#">Stats Summary</a>
+              <ul class="nav navbar-nav tabs">
+                <li>
+                  <a href="#stats">Stats Summary</a>
                 </li>
                 <li>
-                  <a href="#">About</a>
+                  <a href="#notes">Notes</a>
                 </li>
                 <li>
                   <a href="#">Contact</a>
@@ -57,8 +58,8 @@
           </div>
         </div>
         <!-- NAVBAR ENDS -->
-
-              	<h2>Content</h2>
+        <div id="stats">
+              	<h2>Stats</h2>
               	<a class="btn btn-primary pull-right toggle-graph showing-table">Show Graph<br></a>
 
               	<table class="table table-striped table-hover  stats-table">
@@ -112,7 +113,6 @@
 				  </tbody>
 				</table>
 
-
 				{# Graph Begins - Hidden by Default #}
               	<canvas id="statsChart" width="600" height="400" style="display:none;"></canvas>
 
@@ -141,36 +141,31 @@
 								]
 							}
 
-					var options = {
-						//If we want a custom scale
+					var myNewChart = new Chart(ctx).Bar(data);
 
-						// scaleOverride : true,
-						// //** Required if scaleOverride is true **
-						// //Number - The number of steps in a hard coded scale
-						// scaleSteps : 10,
-						// //Number - The value jump in the hard coded scale
-						// scaleStepWidth : 2,
-						// //Number - The scale starting value
-						// scaleStartValue : 0,
-					};
-					var myNewChart = new Chart(ctx).Line(data, options);
-
-					// Button Toggle 
-					$('.toggle-graph').on('click', function(){
-						if($(this).hasClass('showing-table')){
-							$(this).removeClass('showing-table');
-							$(this).addClass('showing-graph');
-							$(this).text('Hide Graph');
-						}else if ($(this).hasClass('showing-graph')) {
-							$(this).removeClass('showing-graph');
-							$(this).addClass('showing-table');
-							$(this).text('Show Graph');
-						}
-						$('#statsChart').toggle('slow');
-					});
 				});
               	</script>
-              	
+        </div>
+
+        <div id="notes">
+				<h3>Player Notes</h3>
+	         {% for note in basicinfo.notes.all %}
+	         	<h4>{{ note.title }}</h4>
+	         	<p>{{ note.content }}</p>
+	         {% endfor %}
+	        <form class="form-horizontal note-form" method="post">
+				{% csrf_token %}
+
+				{{ form|bootstrap_horizontal }}
+
+				<div class="form-group">
+					<label class="control-label col-sm-3 col-lg-3" for="id_submit"></label>
+					<div class=" col-sm-9 col-lg-9">
+						<input type="submit" class="btn btn-primary" name="submit" value="Add Note">
+					</div>
+				</div>
+			</form>
+        </div>
       		</div>
       	</div>              	
   	</div>
