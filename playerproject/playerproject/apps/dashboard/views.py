@@ -115,7 +115,7 @@ def player(request, player_id):
             item.save()
             record.notes.add(item)
 
-            return HttpResponseRedirect(reverse('dashboard_manager'))
+            return HttpResponseRedirect('')
         else:
             print('error')
             #failed
