@@ -65,6 +65,14 @@ def manager_add(request):
 
     return render(request, 'dashboard/recordadd.html', { 'form':form })
 
+
+@login_required
+def manager_compare(request, player_ids):
+    id_list = player_ids.split('/')
+    players = list(PPHockeyUserRecord.objects.filter(id__in=id_list))
+
+
+
 @login_required
 def player_stats_update(request, player_id):
     record =  PPHockeyUserRecord.objects.get(id = player_id)

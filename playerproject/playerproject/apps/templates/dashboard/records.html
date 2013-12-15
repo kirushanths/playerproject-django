@@ -28,10 +28,10 @@ Manager
 		</div>
 
 		<div class="btn-group" id="manager-record-controls">
-			<button class="btn btn-default">
+			<a id="manager-compare" class="btn btn-default" data-django="{% url 'dashboard_manager_compare' 'abc' %}" href="#">
 				<i class="glyphicon glyphicon-stats"></i>
 				&nbsp;&nbsp;Compare
-			</button>
+			</a>
 			<button class="btn btn-default"><i class="glyphicon glyphicon-star"></i>
 				&nbsp;&nbsp;Star
 			</button>
@@ -66,7 +66,7 @@ Manager
 						<a href="#" class="btn btn-link">
 							<i class="text-muted glyphicon glyphicon-star-empty"></i>
 						</a>
-						<a href="#" class="record-checkbox btn btn-link text-muted">
+						<a data-record="{{ record.id }}" href="#" class="record-checkbox btn btn-link text-muted">
 							<i class="text-muted glyphicon glyphicon-unchecked"></i>
 						</a>
 					</div>
