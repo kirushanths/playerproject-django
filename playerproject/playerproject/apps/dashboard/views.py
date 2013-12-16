@@ -70,7 +70,31 @@ def manager_add(request):
 def manager_compare(request, player_ids):
     id_list = player_ids.split('/')
     players = list(PPHockeyUserRecord.objects.filter(id__in=id_list))
-    return render(request, 'dashboard/recordcompare.html')
+
+    player1_basicinfo = players[0]
+    player2_basicinfo = players[1]
+    player1_is_goalie = players[0].is_goalie()
+    player2_is_goalie = players[1].is_goalie()
+    both_goalies = player1_is_goalie and player2_is_goalie
+    one_goalie = player1_is_goalie or player2_is_goalie
+
+    try:
+        if player1_is_goalie:
+            stat1 = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = players[0].stats.id)
+        else:
+            stat1 = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = players[0].stats.id)
+    except:
+        stat1 = False
+
+    try:
+        if player2_is_goalie:
+            stat2 = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = players[1].stats.id)
+        else:
+            stat2 = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = players[1].stats.id)
+    except:
+        stat2 = False
+
+    return render(request, 'dashboard/recordcompare.html' ,{'both_goalies': both_goalies,'one_goalie' : one_goalie,'p1_basicinfo' : player1_basicinfo, 'p2_basicinfo' : player2_basicinfo, 'stat1': stat1, 'stat2':stat2})
 
 
 @login_required
