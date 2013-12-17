@@ -21,15 +21,21 @@
         <div id="stats">
 
               	<h2>Stats</h2>
-            {% if stat1 and stat2 %}            		
-              		{% if both_goalies or not one_goalie %}
               			
               	<table class="table table-hover table-bordered table-condensed stats-table">
 				  <thead>
 				    <tr>
 				      <th>Player</th>
+				      <th>P</th>
 				      <th>GP</th>
-				      {% if both_goalies %}
+				      {% if  has_non_goalie %}
+					      <th>G</th>
+				     	  <th>A</th>
+				     	  <th>P</th>
+					      <th>+/-</th>
+					      <th>PIM</th>
+					  {% endif %}
+				      {% if has_goalie %}
 					      <th>GS</th>
 					      <th>MIN</th>
 					      <th>W</th>
@@ -40,126 +46,114 @@
 					      <th>SV</th>
 					      <th>SV%</th>
 					      <th>SO</th>
-				      {% else %}
-					      <th>G</th>
-				     	  <th>A</th>
-				     	  <th>P</th>
-					      <th>+/-</th>
-					      <th>PIM</th>
-					  {% endif %}
+				      {% endif %}
 				    </tr>
 				  </thead>
 				  <tbody>
-				    <tr style="background-color:rgba(151,187,205,0.5);">
-				      <td>{{ p1_basicinfo.first_name }} {{ p1_basicinfo.last_name }} </td>
-				      <td>{{ stat1.games_played }}</td>
-				      {% if both_goalies %}
-				    	  <td>{{ stat1.games_started }}</td>
-				    	  <td>{{ stat1.minutes }}</td>
-				    	  <td>{{ stat1.wins }}</td>
-				    	  <td>{{ stat1.losses }}</td>
-				    	  <td>{{ stat1.ties }}</td>
-				    	  <td>{{ stat1.goals_against }}</td>
-				    	  <td>{{ stat1.goals_against_avg }}</td>
-				    	  <td>{{ stat1.saves }}</td>
-				    	  <td>{{ stat1.save_percentage }}</td>
-				    	  <td>{{ stat1.shutouts }}</td>
+
+				  	{% for player, stat in stats.items %}
+				    <tr>
+				      <td>{{ player.first_name }} {{ player.last_name }} </td>
+				      <td>{{ player.position }}</td>
+				      <td>{{ player.stats.games_played }}</td>
+				      {% if not stat.goalie %}
+				      	  <td>{{ stat.stat.goals }}</td>
+				    	  <td>{{ stat.stat.assists }}</td>
+				    	  <td>{{ stat.stat.points }}</td>
+				    	  <td>{{ stat.stat.plus_minus }}</td>
+				    	  <td>{{ stat.stat.penalty_minutes }}</td>
+				    	  {% if has_goalie %}
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  {% endif %}
+
 				      {% else %}
-				    	  <td>{{ stat1.goals }}</td>
-				    	  <td>{{ stat1.assists }}</td>
-				    	  <td>{{ stat1.points }}</td>
-				    	  <td>{{ stat1.plus_minus }}</td>
-				    	  <td>{{ stat1.penalty_minutes }}</td>
+				      {% if has_non_goalie %}
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
+				    	  <td>0</td>
 				      {% endif %}
-				    </tr>
-				    <tr style="background-color:rgba(220,220,220,0.5);">
-				      <td>{{ p2_basicinfo.first_name }} {{ p2_basicinfo.last_name }}</td>
-				      <td>{{ stat2.games_played }}</td>
-				      {% if both_goalies %}
-				    	  <td>{{ stat2.games_started }}</td>
-				    	  <td>{{ stat2.minutes }}</td>
-				    	  <td>{{ stat2.wins }}</td>
-				    	  <td>{{ stat2.losses }}</td>
-				    	  <td>{{ stat2.ties }}</td>
-				    	  <td>{{ stat2.goals_against }}</td>
-				    	  <td>{{ stat2.goals_against_avg }}</td>
-				    	  <td>{{ stat2.saves }}</td>
-				    	  <td>{{ stat2.save_percentage }}</td>
-				    	  <td>{{ stat2.shutouts }}</td>
-				      {% else %}
-				    	  <td>{{ stat2.goals }}</td>
-				    	  <td>{{ stat2.assists }}</td>
-				    	  <td>{{ stat2.points }}</td>
-				    	  <td>{{ stat2.plus_minus }}</td>
-				    	  <td>{{ stat2.penalty_minutes }}</td>
+				    	  <td>{{ stat.stat.games_started }}</td>
+				    	  <td>{{ stat.stat.minutes }}</td>
+				    	  <td>{{ stat.stat.wins }}</td>
+				    	  <td>{{ stat.stat.losses }}</td>
+				    	  <td>{{ stat.stat.ties }}</td>
+				    	  <td>{{ stat.stat.goals_against }}</td>
+				    	  <td>{{ stat.stat.goals_against_avg }}</td>
+				    	  <td>{{ stat.stat.saves }}</td>
+				    	  <td>{{ stat.stat.save_percentage }}</td>
+				    	  <td>{{ stat.stat.shutouts }}</td>
 				      {% endif %}
+
 				    </tr>
+				  	{% endfor %}
 				  </tbody>
 				</table>
-
+				<div class="pull-right">
+				{% for player in empty_stats  %}
+					   <p>{{ player.first_name }} {{ player.last_name }} has no stats...</p>
+           <a href="{% url 'dashboard_player_stats_update' player.id %}" class="btn btn-danger">Add Stats</a>
+				{% endfor %}
+			</div>
 				{# Graph Begins - Hidden by Default #}
               	<canvas id="statsChart" height="400"></canvas>
 
               	<script type="text/javascript">
              	domready(function () {
+             		function get_random_color() {
+					    var letters = '0123456789ABCDEF'.split('');
+					    var color = '#';
+					    for (var i = 0; i < 6; i++ ) {
+					        color += letters[Math.round(Math.random() * 15)];
+					    }
+					    return color;
+					}
              		var width = $('.dashboard').width()
 					$('#statsChart').attr('width', width);
               		//Get the context of the canvas element we want to select
 					var ctx = document.getElementById("statsChart").getContext("2d");
 					var data = {
-						{% if both_goalies %}
+						{% if has_goalie and has_non_goalie %}
+					labels : ["GP", "G", "A", "P", "+/-", "PIM", "GS", "MIN", "W", "L", "T", "GA", "GAA", "SV", "SV%", "SO"],
+						{% elif has_goalie and not has_non_goalie %}
 					labels : ["GP", "GS", "MIN", "W", "L", "T", "GA", "GAA", "SV", "SV%", "SO"],
-						{% else %}
-					labels : ["GP", "G", "A", "P", "+/-", "PIM"],
+						{% elif has_non_goalie and not has_goalie %}
+					labels : ["GP","G", "A", "P", "+/-", "PIM"],
 						{% endif %}
 					datasets : [
+						{% for player, stat in stats.items %}							
 									{
-										fillColor : "rgba(151,187,205,0.5)",
+										fillColor : get_random_color(),
 										strokeColor : "rgba(151,187,205,1)",
 										pointColor : "rgba(151,187,205,1)",
 										pointStrokeColor : "#fff",
-										{% if both_goalies %}
-										data : [{{ stat1.games_played }}, {{ stat1.games_started }}, {{ stat1.minutes }}, {{stat1.wins}}, {{stat1.losses}}, {{stat1.ties}}, {{stat1.goals_against}}, {{stat1.goals_against_avg}}, {{stat1.saves}}, {{stat1.save_percentage}}, {{stat1.shutouts}}]
+										{% if stat.goalie %}
+										data : [{{ player.stats.games_played }}, 0, 0, 0, 0, 0, {{ stat.stat.games_started }}, {{ stat.stat.minutes }}, {{stat.stat.wins}}, {{stat.stat.losses}}, {{stat.stat.ties}}, {{stat.stat.goals_against}}, {{stat.stat.goals_against_avg}}, {{stat.stat.saves}}, {{stat.stat.save_percentage}}, {{stat.stat.shutouts}}]
 										{% else %}
-										data : [{{ stat1.games_played }}, {{ stat1.goals }}, {{ stat1.assists }}, {{ stat1.points }}, {{ stat1.plus_minus }}, {{ stat1.penalty_minutes }}]
+										data : [{{ player.stats.games_played }}, {{ stat.stat.goals }}, {{ stat.stat.assists }}, {{ stat.stat.points }}, {{ stat.stat.plus_minus }}, {{ stat.stat.penalty_minutes }}, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 										{% endif %}
 									},
-									{
-										fillColor : "rgba(220,220,220,0.5)",
-										strokeColor : "rgba(151,187,205,1)",
-										pointColor : "rgba(151,187,205,1)",
-										pointStrokeColor : "#fff",
-										{% if both_goalies %}
-										data : [{{ stat2.games_played }}, {{ stat2.games_started }}, {{ stat2.minutes }}, {{stat2.wins}}, {{stat2.losses}}, {{stat2.ties}}, {{stat2.goals_against}}, {{stat2.goals_against_avg}}, {{stat2.saves}}, {{stat2.save_percentage}}, {{stat2.shutouts}}]
-										{% else %}
-										data : [{{ stat2.games_played }}, {{ stat2.goals }}, {{ stat2.assists }}, {{ stat2.points }}, {{ stat2.plus_minus }}, {{ stat2.penalty_minutes }}]
-										{% endif %}
-									},
+						{% endfor %}
+
 								]
 							}
 					var myNewChart = new Chart(ctx).Bar(data);
 
 				});
               	</script>
-              	{% else %}
-              		<p>Cannot compare {{ p1_basicinfo.first_name }} {{ p1_basicinfo.last_name }}({{ p1_basicinfo.position }}) with {{ p2_basicinfo.first_name }} {{ p2_basicinfo.last_name }}({{ p2_basicinfo.position }}) </p>
-              	{% endif %}
 
-           {% elif stat2 and not stat1 %}
-           <p>{{ p1_basicinfo.first_name }} {{ p1_basicinfo.last_name }} has no stats...</p>
-           <a href="{% url 'dashboard_player_stats_update' p1_basicinfo.id %}" class="btn btn-danger">Add Stats</a>
 
-           {% elif stat1 and not stat2 %}
-           <p>{{ p2_basicinfo.first_name }} {{ p2_basicinfo.last_name }} has no stats...</p>
-           <a href="{% url 'dashboard_player_stats_update' p2_basicinfo.id %}" class="btn btn-danger">Add Stats</a>
 
-           {% else %}
-           <p>Both {{ p1_basicinfo.first_name }} {{ p1_basicinfo.last_name }} and {{ p2_basicinfo.first_name }} {{ p2_basicinfo.last_name }} have no stats...</p>
-           <a href="{% url 'dashboard_player_stats_update' p1_basicinfo.id %}" class="btn btn-danger">Add Stats ({{ p1_basicinfo.first_name }} {{ p1_basicinfo.last_name }})</a>
-           <a href="{% url 'dashboard_player_stats_update' p2_basicinfo.id %}" class="btn btn-danger">Add Stats ({{ p2_basicinfo.first_name }} {{ p2_basicinfo.last_name }})</a>
-
-           
-           {% endif %}
 
         </div>
 </div>

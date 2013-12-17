@@ -71,30 +71,26 @@ def manager_compare(request, player_ids):
     id_list = player_ids.split('/')
     players = list(PPHockeyUserRecord.objects.filter(id__in=id_list))
 
-    player1_basicinfo = players[0]
-    player2_basicinfo = players[1]
-    player1_is_goalie = players[0].is_goalie()
-    player2_is_goalie = players[1].is_goalie()
-    both_goalies = player1_is_goalie and player2_is_goalie
-    one_goalie = player1_is_goalie or player2_is_goalie
+    empty_stats = []
+    stats = {}
+    has_non_goalie = False
+    has_goalie = False
+    for player in players:
+        try:
+            if player.is_goalie():
+                stat = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = player.stats.id)
+                goalie = True
+                has_goalie = True
+            else:
+                stat = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = player.stats.id)
+                goalie = False
+                has_non_goalie = True
+            stats[player] = {'stat':stat,'goalie':goalie}
 
-    try:
-        if player1_is_goalie:
-            stat1 = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = players[0].stats.id)
-        else:
-            stat1 = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = players[0].stats.id)
-    except:
-        stat1 = False
+        except:
+            empty_stats.append(player)
 
-    try:
-        if player2_is_goalie:
-            stat2 = PPHockeyGoalieStats.objects.get(pphockeyplayerstats_ptr_id = players[1].stats.id)
-        else:
-            stat2 = PPHockeySkaterStats.objects.get(pphockeyplayerstats_ptr_id = players[1].stats.id)
-    except:
-        stat2 = False
-
-    return render(request, 'dashboard/recordcompare.html' ,{'both_goalies': both_goalies,'one_goalie' : one_goalie,'p1_basicinfo' : player1_basicinfo, 'p2_basicinfo' : player2_basicinfo, 'stat1': stat1, 'stat2':stat2})
+    return render(request, 'dashboard/recordcompare.html' ,{'stats':stats, 'has_goalie':has_goalie, 'has_non_goalie':has_non_goalie, 'empty_stats': empty_stats})
 
 
 @login_required
