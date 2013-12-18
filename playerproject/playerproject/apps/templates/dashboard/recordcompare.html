@@ -4,9 +4,26 @@
 
 {% block javascript %}
     {{ block.super }}
-    <script src="{% static "core/js/compare.js" %}" type="text/javascript"></script>
 	<script src="{% static "player/js/chart.js" %}" type="text/javascript"></script>
 {% endblock %}
+
+{% block extra_head %}
+	<style type="text/css">
+		.legend {
+			position:absolute;
+		    border: 1px solid black;
+		    background-color:white;
+		}
+
+		.legend .title {
+		    display: block;
+		    margin: 0.5em;
+		    border-style: solid;
+		    border-width: 0 0 0 1em;
+		    padding: 0 0.3em;
+		}
+	</style>
+{% endblock extra_head %}
 
 {% block main %}
 
@@ -25,10 +42,10 @@
         {{ player.first_name }} {{ player.last_name }} has no stats...
            <a href="{% url 'dashboard_player_stats_update' player.id %}" class="btn btn-danger">Add Stats</a>
       </div>
-					   
+
 				{% endfor %}
               	<h2>Stats</h2>
-              			
+
               	<table class="table table-hover table-bordered table-condensed stats-table">
 				  <thead>
 				    <tr>
@@ -108,10 +125,13 @@
 				</table>
 
 				{# Graph Begins - Hidden by Default #}
+				<div id="lineLegend"></div>
               	<canvas id="statsChart" height="400"></canvas>
 
               	<script type="text/javascript">
              	domready(function () {
+
+
              		function get_random_color() {
 					    var letters = '0123456789ABCDEF'.split('');
 					    var color = '#';
@@ -120,7 +140,8 @@
 					    }
 					    return color;
 					}
-             		var width = $('.dashboard').width()
+
+					var width = $('.dashboard').width()
 					$('#statsChart').attr('width', width);
               		//Get the context of the canvas element we want to select
 					var ctx = document.getElementById("statsChart").getContext("2d");
@@ -133,12 +154,13 @@
 					labels : ["GP","G", "A", "P", "+/-", "PIM"],
 						{% endif %}
 					datasets : [
-						{% for player, stat in stats.items %}							
+						{% for player, stat in stats.items %}
 									{
 										fillColor : get_random_color(),
 										strokeColor : "rgba(151,187,205,1)",
 										pointColor : "rgba(151,187,205,1)",
 										pointStrokeColor : "#fff",
+										title : '{{ player.first_name }} {{ player.last_name }}',
 										{% if stat.goalie and has_non_goalie %}
 										data : [{{ player.stats.games_played }}, 0, 0, 0, 0, 0, {{ stat.stat.games_started }}, {{ stat.stat.minutes }}, {{stat.stat.wins}}, {{stat.stat.losses}}, {{stat.stat.ties}}, {{stat.stat.goals_against}}, {{stat.stat.goals_against_avg}}, {{stat.stat.saves}}, {{stat.stat.save_percentage}}, {{stat.stat.shutouts}}]
 										{% elif not stat.goalie and has_goalie %}
@@ -154,6 +176,28 @@
 								]
 							}
 					var myNewChart = new Chart(ctx).Bar(data);
+
+					//Function to create a legend
+					function legend(parent, data) {
+					    parent.className = 'legend';
+					    var datas = data.hasOwnProperty('datasets') ? data.datasets : data;
+
+					    datas.forEach(function(d) {
+					        var title = document.createElement('span');
+					        title.className = 'title';
+					        title.style.borderColor = d.hasOwnProperty('fillColor') ? d.fillColor : d.color;
+					        title.style.borderStyle = 'solid';
+					        parent.appendChild(title);
+					        var text = document.createTextNode(d.title);
+					        title.appendChild(text);
+					    });
+
+					}
+					//Call Legend function with the players data
+					legend(document.getElementById("lineLegend"), data);
+					//User dashboards width from above and make the margin of legend dynamic
+					legendwidth = $("#lineLegend").width();
+					$("#lineLegend").css('margin-left', width - legendwidth);
 
 				});
               	</script>
