@@ -68,8 +68,22 @@ domready(function() {
 
 		toolbar.toggle(array.length > 0);
 		active_players = active_players.remove(array);
-		console.log(active_players);
+		$('select[name="add-players"]').toggle(array.length == 0);
+
+		if(active_players.length > 0){
 		compare.attr('href', compare.attr('data-django').replace('abc', active_players.join('/')));
+		} else{
+		compare.attr('href', '/dashboard/manager/');
+		}
+	});
+
+	$('select[name="add-players"]').change(function() {
+		var control = ManagerCntrl;
+		var compare = control.$compareButton;
+		var selectedVal = $(this).val();
+		active_players.push(selectedVal);
+		var url =  compare.attr('data-django').replace('abc', active_players.join('/'))
+		location.href = url;
 	});
 
 });

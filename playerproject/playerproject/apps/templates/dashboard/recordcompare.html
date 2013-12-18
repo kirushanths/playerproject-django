@@ -129,9 +129,15 @@
 
 				    </tr>
 				  	{% endfor %}
-				  </tbody>
-				</table>
-				<div class="btn-group" id="manager-record-controls">
+				  	<tr>
+				  		<td>
+				  			<select class="form-control add-players" name="add-players">
+				  				<option>-Add Player-</option>
+				  				{% for record in records %}
+						        <option value="{{record.id}}" data-django="{% url 'dashboard_manager_compare' 'abc' %}">{{record.first_name}} {{record.last_name}}</option>
+				  				{% endfor %}
+					      	</select>
+					    <div class="btn-group" id="manager-record-controls">
 						<a id="manager-compare" class="btn btn-default" data-django="{% url 'dashboard_manager_compare' 'abc' %}" href="#">
 							<i class="glyphicon glyphicon-trash"></i>
 						&nbsp;&nbsp;Remove Players
@@ -139,6 +145,10 @@
 					</button>
 
 				</div>
+				  		</td>
+				  	</tr>
+				  </tbody>
+				</table>
 
 				{# Graph Begins - Hidden by Default #}
 				<div id="lineLegend"></div>

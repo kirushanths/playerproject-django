@@ -70,6 +70,7 @@ def manager_add(request):
 def manager_compare(request, player_ids):
     id_list = player_ids.split('/')
     players = list(PPHockeyUserRecord.objects.filter(id__in=id_list))
+    playerrecords = list(PPHockeyUserRecord.objects.exclude(id__in=id_list))
 
     empty_stats = []
     stats = {}
@@ -90,7 +91,7 @@ def manager_compare(request, player_ids):
         except:
             empty_stats.append(player)
 
-    return render(request, 'dashboard/recordcompare.html' ,{'stats':stats, 'has_goalie':has_goalie, 'has_non_goalie':has_non_goalie, 'empty_stats': empty_stats})
+    return render(request, 'dashboard/recordcompare.html' ,{'stats':stats, 'has_goalie':has_goalie, 'has_non_goalie':has_non_goalie, 'empty_stats': empty_stats, 'records': playerrecords})
 
 
 @login_required
