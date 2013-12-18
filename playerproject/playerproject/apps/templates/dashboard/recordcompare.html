@@ -87,25 +87,25 @@
 				    	  <td>{{ stat.stat.plus_minus }}</td>
 				    	  <td>{{ stat.stat.penalty_minutes }}</td>
 				    	  {% if has_goalie %}
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
 				    	  {% endif %}
 
 				      {% else %}
 				      {% if has_non_goalie %}
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
-				    	  <td>0</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
+				    	  <td>-</td>
 				      {% endif %}
 				    	  <td>{{ stat.stat.games_started }}</td>
 				    	  <td>{{ stat.stat.minutes }}</td>
@@ -162,9 +162,9 @@
 										pointStrokeColor : "#fff",
 										title : '{{ player.first_name }} {{ player.last_name }}',
 										{% if stat.goalie and has_non_goalie %}
-										data : [{{ player.stats.games_played }}, 0, 0, 0, 0, 0, {{ stat.stat.games_started }}, {{ stat.stat.minutes }}, {{stat.stat.wins}}, {{stat.stat.losses}}, {{stat.stat.ties}}, {{stat.stat.goals_against}}, {{stat.stat.goals_against_avg}}, {{stat.stat.saves}}, {{stat.stat.save_percentage}}, {{stat.stat.shutouts}}]
+										data : [{{ player.stats.games_played }}, , , , , , {{ stat.stat.games_started }}, {{ stat.stat.minutes }}, {{stat.stat.wins}}, {{stat.stat.losses}}, {{stat.stat.ties}}, {{stat.stat.goals_against}}, {{stat.stat.goals_against_avg}}, {{stat.stat.saves}}, {{stat.stat.save_percentage}}, {{stat.stat.shutouts}}]
 										{% elif not stat.goalie and has_goalie %}
-										data : [{{ player.stats.games_played }}, {{ stat.stat.goals }}, {{ stat.stat.assists }}, {{ stat.stat.points }}, {{ stat.stat.plus_minus }}, {{ stat.stat.penalty_minutes }}, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+										data : [{{ player.stats.games_played }}, {{ stat.stat.goals }}, {{ stat.stat.assists }}, {{ stat.stat.points }}, {{ stat.stat.plus_minus }}, {{ stat.stat.penalty_minutes }}, , , , , , , , , , ]
 										{% elif stat.goalie and not has_non_goalie %}
 										data : [{{ player.stats.games_played }},{{ stat.stat.games_started }}, {{ stat.stat.minutes }}, {{stat.stat.wins}}, {{stat.stat.losses}}, {{stat.stat.ties}}, {{stat.stat.goals_against}}, {{stat.stat.goals_against_avg}}, {{stat.stat.saves}}, {{stat.stat.save_percentage}}, {{stat.stat.shutouts}}]
 										{% elif not has_goalie %}
