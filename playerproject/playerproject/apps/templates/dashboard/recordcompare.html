@@ -5,6 +5,7 @@
 {% block javascript %}
     {{ block.super }}
 	<script src="{% static "player/js/chart.js" %}" type="text/javascript"></script>
+    <script src="{% static "core/js/compare.js" %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block extra_head %}
@@ -77,7 +78,14 @@
 
 				  	{% for player, stat in stats.items %}
 				    <tr>
-				      <td>{{ player.first_name }} {{ player.last_name }} </td>
+				      <td>
+				      	<div class="btn-group btn-group-xs">
+							<a data-record="{{ player.id }}" href="#" class="record-checkbox btn btn-link text-muted player-active">
+								<i class="text-muted glyphicon glyphicon-unchecked" style="color:lightgreen;"></i>
+							</a>
+						</div>
+				      	{{ player.first_name }} {{ player.last_name }} 
+				      </td>
 				      <td>{{ player.position }}</td>
 				      <td>{{ player.stats.games_played }}</td>
 				      {% if not stat.goalie %}
@@ -123,6 +131,14 @@
 				  	{% endfor %}
 				  </tbody>
 				</table>
+				<div class="btn-group" id="manager-record-controls">
+						<a id="manager-compare" class="btn btn-default" data-django="{% url 'dashboard_manager_compare' 'abc' %}" href="#">
+							<i class="glyphicon glyphicon-trash"></i>
+						&nbsp;&nbsp;Remove Players
+						</a>
+					</button>
+
+				</div>
 
 				{# Graph Begins - Hidden by Default #}
 				<div id="lineLegend"></div>
@@ -130,19 +146,10 @@
 
               	<script type="text/javascript">
              	domready(function () {
-
-
-             		function get_random_color() {
-					    var letters = '0123456789ABCDEF'.split('');
-					    var color = '#';
-					    for (var i = 0; i < 6; i++ ) {
-					        color += letters[Math.round(Math.random() * 15)];
-					    }
-					    return color;
-					}
-
+             		//Set width of the chart according to the screens width
 					var width = $('.dashboard').width()
 					$('#statsChart').attr('width', width);
+
               		//Get the context of the canvas element we want to select
 					var ctx = document.getElementById("statsChart").getContext("2d");
 					var data = {
@@ -177,24 +184,9 @@
 							}
 					var myNewChart = new Chart(ctx).Bar(data);
 
-					//Function to create a legend
-					function legend(parent, data) {
-					    parent.className = 'legend';
-					    var datas = data.hasOwnProperty('datasets') ? data.datasets : data;
-
-					    datas.forEach(function(d) {
-					        var title = document.createElement('span');
-					        title.className = 'title';
-					        title.style.borderColor = d.hasOwnProperty('fillColor') ? d.fillColor : d.color;
-					        title.style.borderStyle = 'solid';
-					        parent.appendChild(title);
-					        var text = document.createTextNode(d.title);
-					        title.appendChild(text);
-					    });
-
-					}
 					//Call Legend function with the players data
 					legend(document.getElementById("lineLegend"), data);
+
 					//User dashboards width from above and make the margin of legend dynamic
 					legendwidth = $("#lineLegend").width();
 					$("#lineLegend").css('margin-left', width - legendwidth);
