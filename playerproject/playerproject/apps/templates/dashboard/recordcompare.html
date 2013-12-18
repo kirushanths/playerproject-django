@@ -19,7 +19,14 @@
 	</ol>
 <!-- NAVBAR ENDS -->
         <div id="stats">
-
+				{% for player in empty_stats  %}
+				  <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ player.first_name }} {{ player.last_name }} has no stats...
+           <a href="{% url 'dashboard_player_stats_update' player.id %}" class="btn btn-danger">Add Stats</a>
+      </div>
+					   
+				{% endfor %}
               	<h2>Stats</h2>
               			
               	<table class="table table-hover table-bordered table-condensed stats-table">
@@ -99,12 +106,7 @@
 				  	{% endfor %}
 				  </tbody>
 				</table>
-				<div class="pull-right">
-				{% for player in empty_stats  %}
-					   <p>{{ player.first_name }} {{ player.last_name }} has no stats...</p>
-           <a href="{% url 'dashboard_player_stats_update' player.id %}" class="btn btn-danger">Add Stats</a>
-				{% endfor %}
-			</div>
+
 				{# Graph Begins - Hidden by Default #}
               	<canvas id="statsChart" height="400"></canvas>
 
@@ -137,10 +139,14 @@
 										strokeColor : "rgba(151,187,205,1)",
 										pointColor : "rgba(151,187,205,1)",
 										pointStrokeColor : "#fff",
-										{% if stat.goalie %}
+										{% if stat.goalie and has_non_goalie %}
 										data : [{{ player.stats.games_played }}, 0, 0, 0, 0, 0, {{ stat.stat.games_started }}, {{ stat.stat.minutes }}, {{stat.stat.wins}}, {{stat.stat.losses}}, {{stat.stat.ties}}, {{stat.stat.goals_against}}, {{stat.stat.goals_against_avg}}, {{stat.stat.saves}}, {{stat.stat.save_percentage}}, {{stat.stat.shutouts}}]
-										{% else %}
+										{% elif not stat.goalie and has_goalie %}
 										data : [{{ player.stats.games_played }}, {{ stat.stat.goals }}, {{ stat.stat.assists }}, {{ stat.stat.points }}, {{ stat.stat.plus_minus }}, {{ stat.stat.penalty_minutes }}, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+										{% elif stat.goalie and not has_non_goalie %}
+										data : [{{ player.stats.games_played }},{{ stat.stat.games_started }}, {{ stat.stat.minutes }}, {{stat.stat.wins}}, {{stat.stat.losses}}, {{stat.stat.ties}}, {{stat.stat.goals_against}}, {{stat.stat.goals_against_avg}}, {{stat.stat.saves}}, {{stat.stat.save_percentage}}, {{stat.stat.shutouts}}]
+										{% elif not has_goalie %}
+										data : [{{ player.stats.games_played }}, {{ stat.stat.goals }}, {{ stat.stat.assists }}, {{ stat.stat.points }}, {{ stat.stat.plus_minus }}, {{ stat.stat.penalty_minutes }}]
 										{% endif %}
 									},
 						{% endfor %}
